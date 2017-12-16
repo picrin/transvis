@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>transvis.geneCanvas</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="transvis-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="transvis-module.html">Package&nbsp;transvis</a> ::
+        Module&nbsp;geneCanvas
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="transvis.geneCanvas-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="transvis.geneCanvas-module.html">Module transvis.geneCanvas</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package transvis=transvis-module.html"><a title="transvis" class="py-name" href="#" onclick="return doclink('link-0', 'transvis', 'link-0');">transvis</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module transvis.utils=transvis.utils-module.html"><a title="transvis.utils" class="py-name" href="#" onclick="return doclink('link-1', 'utils', 'link-1');">utils</a></tt> <tt class="py-keyword">import</tt> <tt class="py-op">*</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-2" class="py-name"><a title="transvis" class="py-name" href="#" onclick="return doclink('link-2', 'transvis', 'link-0');">transvis</a></tt><tt class="py-op">.</tt><tt id="link-3" class="py-name" targets="Module transvis.io=transvis.io-module.html"><a title="transvis.io" class="py-name" href="#" onclick="return doclink('link-3', 'io', 'link-3');">io</a></tt> <tt class="py-keyword">import</tt> <tt class="py-op">*</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-4" class="py-name"><a title="transvis" class="py-name" href="#" onclick="return doclink('link-4', 'transvis', 'link-0');">transvis</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name" targets="Module transvis.alterSplice=transvis.alterSplice-module.html"><a title="transvis.alterSplice" class="py-name" href="#" onclick="return doclink('link-5', 'alterSplice', 'link-5');">alterSplice</a></tt> <tt class="py-keyword">import</tt> <tt class="py-op">*</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
+<a name="searchGene"></a><div id="searchGene-def"><a name="L5"></a><tt class="py-lineno"> 5</tt> <a class="py-toggle" href="#" id="searchGene-toggle" onclick="return toggle('searchGene');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.geneCanvas-module.html#searchGene">searchGene</a><tt class="py-op">(</tt><tt class="py-param">name</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="searchGene-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="searchGene-expanded"><a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line">    <tt class="py-name">searchResult</tt> <tt class="py-op">=</tt> <tt id="link-6" class="py-name" targets="Function transvis.io.geneToTrans()=transvis.io-module.html#geneToTrans"><a title="transvis.io.geneToTrans" class="py-name" href="#" onclick="return doclink('link-6', 'geneToTrans', 'link-6');">geneToTrans</a></tt><tt class="py-op">(</tt><tt class="py-name">name</tt><tt class="py-op">)</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line">    <tt class="py-keyword">if</tt> <tt class="py-keyword">not</tt> <tt class="py-name">searchResult</tt><tt class="py-op">:</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line">        <tt class="py-name">searchResult</tt> <tt class="py-op">=</tt> <tt id="link-7" class="py-name" targets="Function transvis.io.extendedToTrans()=transvis.io-module.html#extendedToTrans"><a title="transvis.io.extendedToTrans" class="py-name" href="#" onclick="return doclink('link-7', 'extendedToTrans', 'link-7');">extendedToTrans</a></tt><tt class="py-op">(</tt><tt class="py-name">name</tt><tt class="py-op">)</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">json</tt><tt class="py-op">.</tt><tt class="py-name">dumps</tt><tt class="py-op">(</tt><tt class="py-name">list</tt><tt class="py-op">(</tt><tt class="py-name">searchResult</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"> </tt>
+<a name="funcGenes"></a><div id="funcGenes-def"><a name="L11"></a><tt class="py-lineno">11</tt> <a class="py-toggle" href="#" id="funcGenes-toggle" onclick="return toggle('funcGenes');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.geneCanvas-module.html#funcGenes">funcGenes</a><tt class="py-op">(</tt><tt class="py-param">c</tt><tt class="py-op">,</tt> <tt class="py-param">left</tt><tt class="py-op">,</tt> <tt class="py-param">right</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="funcGenes-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="funcGenes-expanded"><a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line">    <tt id="link-8" class="py-name" targets="Function transvis.utils.validateInput()=transvis.utils-module.html#validateInput"><a title="transvis.utils.validateInput" class="py-name" href="#" onclick="return doclink('link-8', 'validateInput', 'link-8');">validateInput</a></tt><tt class="py-op">(</tt><tt class="py-name">c</tt><tt class="py-op">)</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line">    <tt class="py-name">response</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line">    <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt id="link-9" class="py-name" targets="Variable transvis.io.redisConn=transvis.io-module.html#redisConn"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-9', 'redisConn', 'link-9');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"genecode"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">zrangebyscore</tt><tt class="py-op">(</tt><tt class="py-string">"genecode$"</tt> <tt class="py-op">+</tt> <tt class="py-name">c</tt><tt class="py-op">,</tt> <tt class="py-name">left</tt><tt class="py-op">,</tt> <tt class="py-name">right</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">        <tt class="py-name">parsedElem</tt> <tt class="py-op">=</tt> <tt class="py-name">json</tt><tt class="py-op">.</tt><tt class="py-name">loads</tt><tt class="py-op">(</tt><tt id="link-10" class="py-name" targets="Function transvis.utils.d()=transvis.utils-module.html#d"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-10', 'd', 'link-10');">d</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">        <tt class="py-name">response</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt class="py-name">parsedElem</tt><tt class="py-op">)</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt><tt class="py-op">(</tt><tt class="py-name">response</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"> </tt>
+<a name="clusterID"></a><div id="clusterID-def"><a name="L19"></a><tt class="py-lineno">19</tt> <a class="py-toggle" href="#" id="clusterID-toggle" onclick="return toggle('clusterID');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.geneCanvas-module.html#clusterID">clusterID</a><tt class="py-op">(</tt><tt class="py-param">clusID</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="clusterID-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="clusterID-expanded"><a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">    <tt class="py-name">chromosome</tt> <tt class="py-op">=</tt> <tt class="py-name">None</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line">    <tt class="py-name">leftMost</tt> <tt class="py-op">=</tt> <tt class="py-number">2</tt><tt class="py-op">**</tt><tt class="py-number">64</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line">    <tt class="py-name">rightMost</tt> <tt class="py-op">=</tt> <tt class="py-op">-</tt><tt class="py-number">2</tt><tt class="py-op">**</tt><tt class="py-number">64</tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">    <tt class="py-name">result</tt> <tt class="py-op">=</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">    <tt class="py-keyword">for</tt> <tt class="py-name">probeset</tt> <tt class="py-keyword">in</tt> <tt id="link-11" class="py-name" targets="Function transvis.io.transToProbeset()=transvis.io-module.html#transToProbeset"><a title="transvis.io.transToProbeset" class="py-name" href="#" onclick="return doclink('link-11', 'transToProbeset', 'link-11');">transToProbeset</a></tt><tt class="py-op">(</tt><tt class="py-name">clusID</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line">        <tt class="py-name">elems</tt> <tt class="py-op">=</tt> <tt id="link-12" class="py-name" targets="Function transvis.io.probesetAnnotationMetadata()=transvis.io-module.html#probesetAnnotationMetadata"><a title="transvis.io.probesetAnnotationMetadata" class="py-name" href="#" onclick="return doclink('link-12', 'probesetAnnotationMetadata', 'link-12');">probesetAnnotationMetadata</a></tt><tt class="py-op">(</tt><tt class="py-name">probeset</tt><tt class="py-op">)</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">elems</tt><tt class="py-op">[</tt><tt class="py-number">3</tt><tt class="py-op">]</tt> <tt class="py-op">&lt;</tt> <tt class="py-name">leftMost</tt><tt class="py-op">:</tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">            <tt class="py-name">leftMost</tt> <tt class="py-op">=</tt> <tt class="py-name">elems</tt><tt class="py-op">[</tt><tt class="py-number">3</tt><tt class="py-op">]</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">elems</tt><tt class="py-op">[</tt><tt class="py-number">4</tt><tt class="py-op">]</tt> <tt class="py-op">&gt;</tt> <tt class="py-name">rightMost</tt><tt class="py-op">:</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line">            <tt class="py-name">rightMost</tt> <tt class="py-op">=</tt> <tt class="py-name">elems</tt><tt class="py-op">[</tt><tt class="py-number">4</tt><tt class="py-op">]</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">elems</tt><tt class="py-op">[</tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> <tt class="py-op">==</tt> <tt class="py-string">"core"</tt><tt class="py-op">:</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">            <tt id="link-13" class="py-name" targets="Function transvis.io.probesetData()=transvis.io-module.html#probesetData"><a title="transvis.io.probesetData" class="py-name" href="#" onclick="return doclink('link-13', 'probesetData', 'link-13');">probesetData</a></tt> <tt class="py-op">=</tt> <tt id="link-14" class="py-name" targets="Function transvis.alterSplice.dataForProbeset()=transvis.alterSplice-module.html#dataForProbeset"><a title="transvis.alterSplice.dataForProbeset" class="py-name" href="#" onclick="return doclink('link-14', 'dataForProbeset', 'link-14');">dataForProbeset</a></tt><tt class="py-op">(</tt><tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">elems</tt><tt class="py-op">[</tt><tt class="py-number">0</tt><tt class="py-op">]</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">[</tt><tt class="py-string">"probeData"</tt><tt class="py-op">]</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">            <tt class="py-name">checkPValue</tt> <tt class="py-op">=</tt> <tt id="link-15" class="py-name" targets="Function transvis.alterSplice.pValueForProbeset()=transvis.alterSplice-module.html#pValueForProbeset"><a title="transvis.alterSplice.pValueForProbeset" class="py-name" href="#" onclick="return doclink('link-15', 'pValueForProbeset', 'link-15');">pValueForProbeset</a></tt><tt class="py-op">(</tt><tt id="link-16" class="py-name"><a title="transvis.io.probesetData" class="py-name" href="#" onclick="return doclink('link-16', 'probesetData', 'link-13');">probesetData</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line">            <tt class="py-name">extendedElems</tt> <tt class="py-op">=</tt> <tt class="py-name">elems</tt> <tt class="py-op">+</tt> <tt class="py-op">[</tt><tt class="py-name">checkPValue</tt> <tt class="py-op">*</tt> <tt id="link-17" class="py-name" targets="Function transvis.io.totalProbesets()=transvis.io-module.html#totalProbesets"><a title="transvis.io.totalProbesets" class="py-name" href="#" onclick="return doclink('link-17', 'totalProbesets', 'link-17');">totalProbesets</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt id="link-18" class="py-name" targets="Function transvis.alterSplice.modalAllele()=transvis.alterSplice-module.html#modalAllele"><a title="transvis.alterSplice.modalAllele" class="py-name" href="#" onclick="return doclink('link-18', 'modalAllele', 'link-18');">modalAllele</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt id="link-19" class="py-name"><a title="transvis.io.probesetData" class="py-name" href="#" onclick="return doclink('link-19', 'probesetData', 'link-13');">probesetData</a></tt><tt class="py-op">]</tt> </tt>
+<a name="L34"></a><tt class="py-lineno">34</tt>  <tt class="py-line">            <tt class="py-name">result</tt><tt class="py-op">.</tt><tt class="py-name">append</tt><tt class="py-op">(</tt><tt class="py-name">extendedElems</tt><tt class="py-op">)</tt> </tt>
+<a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line"> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">        <tt class="py-name">chromosome</tt> <tt class="py-op">=</tt> <tt class="py-name">elems</tt><tt class="py-op">[</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">json</tt><tt class="py-op">.</tt><tt class="py-name">dumps</tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-op">[</tt><tt class="py-name">chromosome</tt><tt class="py-op">,</tt> <tt class="py-name">leftMost</tt><tt class="py-op">,</tt> <tt class="py-name">rightMost</tt><tt class="py-op">]</tt><tt class="py-op">,</tt> <tt id="link-20" class="py-name" targets="Function transvis.geneCanvas.funcGenes()=transvis.geneCanvas-module.html#funcGenes"><a title="transvis.geneCanvas.funcGenes" class="py-name" href="#" onclick="return doclink('link-20', 'funcGenes', 'link-20');">funcGenes</a></tt><tt class="py-op">(</tt><tt class="py-name">chromosome</tt><tt class="py-op">,</tt> <tt class="py-name">leftMost</tt><tt class="py-op">,</tt> <tt class="py-name">rightMost</tt><tt class="py-op">)</tt><tt class="py-op">,</tt> <tt class="py-name">result</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="transvis-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Apr 16 13:07:04 2017
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

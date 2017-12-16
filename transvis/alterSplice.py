@@ -2,6 +2,7 @@ from transvis.io import *
 from transvis.utils import *
 import numpy as np
 import scipy
+import scipy.special
 import math
 
 @cache

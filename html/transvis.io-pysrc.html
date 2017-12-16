@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>transvis.io</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="transvis-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="transvis-module.html">Package&nbsp;transvis</a> ::
+        Module&nbsp;io
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="transvis.io-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="transvis.io-module.html">Module transvis.io</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno">  1</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L2"></a><tt class="py-lineno">  2</tt>  <tt class="py-line"><tt class="py-docstring">Module to read genomic data from redis.</tt> </tt>
+<a name="L3"></a><tt class="py-lineno">  3</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L4"></a><tt class="py-lineno">  4</tt>  <tt class="py-line"> </tt>
+<a name="L5"></a><tt class="py-lineno">  5</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">redis</tt> </tt>
+<a name="L6"></a><tt class="py-lineno">  6</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">fakeredis</tt> </tt>
+<a name="L7"></a><tt class="py-lineno">  7</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">json</tt> </tt>
+<a name="L8"></a><tt class="py-lineno">  8</tt>  <tt class="py-line"><tt class="py-keyword">from</tt> <tt id="link-0" class="py-name" targets="Package transvis=transvis-module.html"><a title="transvis" class="py-name" href="#" onclick="return doclink('link-0', 'transvis', 'link-0');">transvis</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Module transvis.utils=transvis.utils-module.html"><a title="transvis.utils" class="py-name" href="#" onclick="return doclink('link-1', 'utils', 'link-1');">utils</a></tt> <tt class="py-keyword">import</tt> <tt class="py-op">*</tt> </tt>
+<a name="L9"></a><tt class="py-lineno">  9</tt>  <tt class="py-line"> </tt>
+<a name="L10"></a><tt class="py-lineno"> 10</tt>  <tt class="py-line"> </tt>
+<a name="L11"></a><tt class="py-lineno"> 11</tt>  <tt class="py-line"><tt id="link-2" class="py-name" targets="Variable transvis.io.annotationDB=transvis.io-module.html#annotationDB"><a title="transvis.io.annotationDB" class="py-name" href="#" onclick="return doclink('link-2', 'annotationDB', 'link-2');">annotationDB</a></tt> <tt class="py-op">=</tt> <tt class="py-number">1</tt> </tt>
+<a name="L12"></a><tt class="py-lineno"> 12</tt>  <tt class="py-line"><tt id="link-3" class="py-name" targets="Variable transvis.io.probeDB=transvis.io-module.html#probeDB"><a title="transvis.io.probeDB" class="py-name" href="#" onclick="return doclink('link-3', 'probeDB', 'link-3');">probeDB</a></tt> <tt class="py-op">=</tt> <tt class="py-number">2</tt> </tt>
+<a name="L13"></a><tt class="py-lineno"> 13</tt>  <tt class="py-line"><tt id="link-4" class="py-name" targets="Variable transvis.io.alterSpliceDB=transvis.io-module.html#alterSpliceDB"><a title="transvis.io.alterSpliceDB" class="py-name" href="#" onclick="return doclink('link-4', 'alterSpliceDB', 'link-4');">alterSpliceDB</a></tt> <tt class="py-op">=</tt> <tt class="py-number">3</tt> </tt>
+<a name="L14"></a><tt class="py-lineno"> 14</tt>  <tt class="py-line"><tt id="link-5" class="py-name" targets="Variable transvis.io.genecodeDB=transvis.io-module.html#genecodeDB"><a title="transvis.io.genecodeDB" class="py-name" href="#" onclick="return doclink('link-5', 'genecodeDB', 'link-5');">genecodeDB</a></tt> <tt class="py-op">=</tt> <tt class="py-number">4</tt> </tt>
+<a name="L15"></a><tt class="py-lineno"> 15</tt>  <tt class="py-line"> </tt>
+<a name="L16"></a><tt class="py-lineno"> 16</tt>  <tt class="py-line"><tt id="link-6" class="py-name" targets="Variable transvis.io.redisConn=transvis.io-module.html#redisConn"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-6', 'redisConn', 'link-6');">redisConn</a></tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-op">}</tt> </tt>
+<a name="initDB"></a><div id="initDB-def"><a name="L17"></a><tt class="py-lineno"> 17</tt>  <tt class="py-line"> </tt>
+<a name="L18"></a><tt class="py-lineno"> 18</tt>  <tt class="py-line"> </tt>
+<a name="L19"></a><tt class="py-lineno"> 19</tt> <a class="py-toggle" href="#" id="initDB-toggle" onclick="return toggle('initDB');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#initDB">initDB</a><tt class="py-op">(</tt><tt class="py-param">host</tt><tt class="py-op">=</tt><tt class="py-string">"localhost"</tt><tt class="py-op">,</tt> <tt class="py-param">port</tt><tt class="py-op">=</tt><tt class="py-number">2050</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="initDB-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="initDB-expanded"><a name="L20"></a><tt class="py-lineno"> 20</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L21"></a><tt class="py-lineno"> 21</tt>  <tt class="py-line"><tt class="py-docstring">    Initializes connection to a real redis instance running on a given</tt> </tt>
+<a name="L22"></a><tt class="py-lineno"> 22</tt>  <tt class="py-line"><tt class="py-docstring">    interface and a given port. This function is not expected to raise any</tt> </tt>
+<a name="L23"></a><tt class="py-lineno"> 23</tt>  <tt class="py-line"><tt class="py-docstring">    exceptions. If database is not accessible on the given interface/port,</tt> </tt>
+<a name="L24"></a><tt class="py-lineno"> 24</tt>  <tt class="py-line"><tt class="py-docstring">    redisConn.exceptions.ConnectionError will be raised.</tt> </tt>
+<a name="L25"></a><tt class="py-lineno"> 25</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L26"></a><tt class="py-lineno"> 26</tt>  <tt class="py-line"><tt class="py-docstring">    To access probe data use redisConn["probe"]</tt> </tt>
+<a name="L27"></a><tt class="py-lineno"> 27</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L28"></a><tt class="py-lineno"> 28</tt>  <tt class="py-line"><tt class="py-docstring">    To access annotation data use redisConn["annot"]</tt> </tt>
+<a name="L29"></a><tt class="py-lineno"> 29</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L30"></a><tt class="py-lineno"> 30</tt>  <tt class="py-line"><tt class="py-docstring">    To access alternative splicing data use redisConn["alterSplice"]</tt> </tt>
+<a name="L31"></a><tt class="py-lineno"> 31</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L32"></a><tt class="py-lineno"> 32</tt>  <tt class="py-line"><tt class="py-docstring">    To access genecode data use redisConn["genecode"]</tt> </tt>
+<a name="L33"></a><tt class="py-lineno"> 33</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L34"></a><tt class="py-lineno"> 34</tt>  <tt class="py-line"><tt class="py-docstring">    For the purpose of testing use initFakeDB.</tt> </tt>
+<a name="L35"></a><tt class="py-lineno"> 35</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L36"></a><tt class="py-lineno"> 36</tt>  <tt class="py-line"><tt class="py-docstring">    @param host: interface to connect to. Example values include localhost,</tt> </tt>
+<a name="L37"></a><tt class="py-lineno"> 37</tt>  <tt class="py-line"><tt class="py-docstring">    127.0.0.1 and 0.0.0.0 (not recommended).</tt> </tt>
+<a name="L38"></a><tt class="py-lineno"> 38</tt>  <tt class="py-line"><tt class="py-docstring">    @param port: port to run on. 2050 is recommended, and used by transvis-db.</tt> </tt>
+<a name="L39"></a><tt class="py-lineno"> 39</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L40"></a><tt class="py-lineno"> 40</tt>  <tt class="py-line">    <tt id="link-7" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-7', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"genecode"</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">redis</tt><tt class="py-op">.</tt><tt class="py-name">StrictRedis</tt><tt class="py-op">(</tt><tt class="py-name">host</tt><tt class="py-op">=</tt><tt class="py-string">'localhost'</tt><tt class="py-op">,</tt> </tt>
+<a name="L41"></a><tt class="py-lineno"> 41</tt>  <tt class="py-line">                                              <tt class="py-name">db</tt><tt class="py-op">=</tt><tt id="link-8" class="py-name"><a title="transvis.io.genecodeDB" class="py-name" href="#" onclick="return doclink('link-8', 'genecodeDB', 'link-5');">genecodeDB</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L42"></a><tt class="py-lineno"> 42</tt>  <tt class="py-line">                                              <tt class="py-name">port</tt><tt class="py-op">=</tt><tt class="py-name">port</tt><tt class="py-op">)</tt> </tt>
+<a name="L43"></a><tt class="py-lineno"> 43</tt>  <tt class="py-line">    <tt id="link-9" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-9', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"annot"</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">redis</tt><tt class="py-op">.</tt><tt class="py-name">StrictRedis</tt><tt class="py-op">(</tt><tt class="py-name">host</tt><tt class="py-op">=</tt><tt class="py-string">'localhost'</tt><tt class="py-op">,</tt> </tt>
+<a name="L44"></a><tt class="py-lineno"> 44</tt>  <tt class="py-line">                                           <tt class="py-name">db</tt><tt class="py-op">=</tt><tt id="link-10" class="py-name"><a title="transvis.io.annotationDB" class="py-name" href="#" onclick="return doclink('link-10', 'annotationDB', 'link-2');">annotationDB</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L45"></a><tt class="py-lineno"> 45</tt>  <tt class="py-line">                                           <tt class="py-name">port</tt><tt class="py-op">=</tt><tt class="py-name">port</tt><tt class="py-op">)</tt> </tt>
+<a name="L46"></a><tt class="py-lineno"> 46</tt>  <tt class="py-line">    <tt id="link-11" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-11', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"probe"</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">redis</tt><tt class="py-op">.</tt><tt class="py-name">StrictRedis</tt><tt class="py-op">(</tt><tt class="py-name">host</tt><tt class="py-op">=</tt><tt class="py-string">'localhost'</tt><tt class="py-op">,</tt> </tt>
+<a name="L47"></a><tt class="py-lineno"> 47</tt>  <tt class="py-line">                                           <tt class="py-name">db</tt><tt class="py-op">=</tt><tt id="link-12" class="py-name"><a title="transvis.io.probeDB" class="py-name" href="#" onclick="return doclink('link-12', 'probeDB', 'link-3');">probeDB</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L48"></a><tt class="py-lineno"> 48</tt>  <tt class="py-line">                                           <tt class="py-name">port</tt><tt class="py-op">=</tt><tt class="py-name">port</tt><tt class="py-op">)</tt> </tt>
+<a name="L49"></a><tt class="py-lineno"> 49</tt>  <tt class="py-line">    <tt id="link-13" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-13', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"alterSplice"</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">redis</tt><tt class="py-op">.</tt><tt class="py-name">StrictRedis</tt><tt class="py-op">(</tt><tt class="py-name">host</tt><tt class="py-op">=</tt><tt class="py-string">'localhost'</tt><tt class="py-op">,</tt> </tt>
+<a name="L50"></a><tt class="py-lineno"> 50</tt>  <tt class="py-line">                                                 <tt class="py-name">db</tt><tt class="py-op">=</tt><tt id="link-14" class="py-name"><a title="transvis.io.alterSpliceDB" class="py-name" href="#" onclick="return doclink('link-14', 'alterSpliceDB', 'link-4');">alterSpliceDB</a></tt><tt class="py-op">,</tt> </tt>
+<a name="L51"></a><tt class="py-lineno"> 51</tt>  <tt class="py-line">                                                 <tt class="py-name">port</tt><tt class="py-op">=</tt><tt class="py-name">port</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L52"></a><tt class="py-lineno"> 52</tt>  <tt class="py-line"> </tt>
+<a name="initFakeDB"></a><div id="initFakeDB-def"><a name="L53"></a><tt class="py-lineno"> 53</tt>  <tt class="py-line"> </tt>
+<a name="L54"></a><tt class="py-lineno"> 54</tt> <a class="py-toggle" href="#" id="initFakeDB-toggle" onclick="return toggle('initFakeDB');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#initFakeDB">initFakeDB</a><tt class="py-op">(</tt><tt class="py-op">*</tt><tt class="py-param">args</tt><tt class="py-op">,</tt> <tt class="py-op">**</tt><tt class="py-param">kwargs</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="initFakeDB-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="initFakeDB-expanded"><a name="L55"></a><tt class="py-lineno"> 55</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L56"></a><tt class="py-lineno"> 56</tt>  <tt class="py-line"><tt class="py-docstring">    Initializes connection to a fake redisConn instance for the purpose of</tt> </tt>
+<a name="L57"></a><tt class="py-lineno"> 57</tt>  <tt class="py-line"><tt class="py-docstring">    testing. Any (named) parameter may be passed, but will not change the</tt> </tt>
+<a name="L58"></a><tt class="py-lineno"> 58</tt>  <tt class="py-line"><tt class="py-docstring">    behaviour of the function.</tt> </tt>
+<a name="L59"></a><tt class="py-lineno"> 59</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L60"></a><tt class="py-lineno"> 60</tt>  <tt class="py-line">    <tt id="link-15" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-15', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"genecode"</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">fakeredis</tt><tt class="py-op">.</tt><tt class="py-name">FakeStrictRedis</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L61"></a><tt class="py-lineno"> 61</tt>  <tt class="py-line">    <tt id="link-16" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-16', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"annot"</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">fakeredis</tt><tt class="py-op">.</tt><tt class="py-name">FakeStrictRedis</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L62"></a><tt class="py-lineno"> 62</tt>  <tt class="py-line">    <tt id="link-17" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-17', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"probe"</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">fakeredis</tt><tt class="py-op">.</tt><tt class="py-name">FakeStrictRedis</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L63"></a><tt class="py-lineno"> 63</tt>  <tt class="py-line">    <tt id="link-18" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-18', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"alterSplice"</tt><tt class="py-op">]</tt> <tt class="py-op">=</tt> <tt class="py-name">fakeredis</tt><tt class="py-op">.</tt><tt class="py-name">FakeStrictRedis</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L64"></a><tt class="py-lineno"> 64</tt>  <tt class="py-line"> </tt>
+<a name="transToProbeset"></a><div id="transToProbeset-def"><a name="L65"></a><tt class="py-lineno"> 65</tt>  <tt class="py-line"> </tt>
+<a name="L66"></a><tt class="py-lineno"> 66</tt> <a class="py-toggle" href="#" id="transToProbeset-toggle" onclick="return toggle('transToProbeset');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#transToProbeset">transToProbeset</a><tt class="py-op">(</tt><tt class="py-param">trans</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="transToProbeset-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="transToProbeset-expanded"><a name="L67"></a><tt class="py-lineno"> 67</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L68"></a><tt class="py-lineno"> 68</tt>  <tt class="py-line"><tt class="py-docstring">    Retrieves probeset associated with a given transcription cluster ID.</tt> </tt>
+<a name="L69"></a><tt class="py-lineno"> 69</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L70"></a><tt class="py-lineno"> 70</tt>  <tt class="py-line"><tt class="py-docstring">    @param trans: valid transcription cluster ID.</tt> </tt>
+<a name="L71"></a><tt class="py-lineno"> 71</tt>  <tt class="py-line"><tt class="py-docstring">    @return: A set of probeset IDs.</tt> </tt>
+<a name="L72"></a><tt class="py-lineno"> 72</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L73"></a><tt class="py-lineno"> 73</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">set</tt><tt class="py-op">(</tt><tt id="link-19" class="py-name" targets="Function transvis.utils.d()=transvis.utils-module.html#d"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-19', 'd', 'link-19');">d</a></tt><tt class="py-op">(</tt><tt class="py-name">i</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt id="link-20" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-20', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"annot"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">smembers</tt><tt class="py-op">(</tt><tt class="py-string">'trans$probeset$'</tt> <tt class="py-op">+</tt> </tt>
+<a name="L74"></a><tt class="py-lineno"> 74</tt>  <tt class="py-line">                                                         <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">trans</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L75"></a><tt class="py-lineno"> 75</tt>  <tt class="py-line"> </tt>
+<a name="probesetToTrans"></a><div id="probesetToTrans-def"><a name="L76"></a><tt class="py-lineno"> 76</tt>  <tt class="py-line"> </tt>
+<a name="L77"></a><tt class="py-lineno"> 77</tt> <a class="py-toggle" href="#" id="probesetToTrans-toggle" onclick="return toggle('probesetToTrans');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#probesetToTrans">probesetToTrans</a><tt class="py-op">(</tt><tt class="py-param">probeset</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="probesetToTrans-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="probesetToTrans-expanded"><a name="L78"></a><tt class="py-lineno"> 78</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L79"></a><tt class="py-lineno"> 79</tt>  <tt class="py-line"><tt class="py-docstring">    Retrieves transcription clusters, to whom the given probeset belongs.</tt> </tt>
+<a name="L80"></a><tt class="py-lineno"> 80</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L81"></a><tt class="py-lineno"> 81</tt>  <tt class="py-line"><tt class="py-docstring">    Although we'd hope there's only one cluster, we still return a set, just in</tt> </tt>
+<a name="L82"></a><tt class="py-lineno"> 82</tt>  <tt class="py-line"><tt class="py-docstring">    case.</tt> </tt>
+<a name="L83"></a><tt class="py-lineno"> 83</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L84"></a><tt class="py-lineno"> 84</tt>  <tt class="py-line"><tt class="py-docstring">    @param probeset: valid probeset ID.</tt> </tt>
+<a name="L85"></a><tt class="py-lineno"> 85</tt>  <tt class="py-line"><tt class="py-docstring">    @return: a set (mostly 1-element) of transcription cluster IDs.</tt> </tt>
+<a name="L86"></a><tt class="py-lineno"> 86</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L87"></a><tt class="py-lineno"> 87</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">set</tt><tt class="py-op">(</tt><tt id="link-21" class="py-name"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-21', 'd', 'link-19');">d</a></tt><tt class="py-op">(</tt><tt class="py-name">i</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt id="link-22" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-22', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"annot"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">smembers</tt><tt class="py-op">(</tt><tt class="py-string">"search$probeset$"</tt> <tt class="py-op">+</tt> </tt>
+<a name="L88"></a><tt class="py-lineno"> 88</tt>  <tt class="py-line">                                                         <tt id="link-23" class="py-name" targets="Function transvis.utils.convertToStr()=transvis.utils-module.html#convertToStr"><a title="transvis.utils.convertToStr" class="py-name" href="#" onclick="return doclink('link-23', 'convertToStr', 'link-23');">convertToStr</a></tt><tt class="py-op">(</tt><tt class="py-name">probeset</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L89"></a><tt class="py-lineno"> 89</tt>  <tt class="py-line"> </tt>
+<a name="metadataKeys"></a><div id="metadataKeys-def"><a name="L90"></a><tt class="py-lineno"> 90</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">cache</tt> </tt>
+<a name="L91"></a><tt class="py-lineno"> 91</tt> <a class="py-toggle" href="#" id="metadataKeys-toggle" onclick="return toggle('metadataKeys');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#metadataKeys">metadataKeys</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="metadataKeys-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="metadataKeys-expanded"><a name="L92"></a><tt class="py-lineno"> 92</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L93"></a><tt class="py-lineno"> 93</tt>  <tt class="py-line"><tt class="py-docstring">    Retrieves a list of headers, which can be used to understand the output of</tt> </tt>
+<a name="L94"></a><tt class="py-lineno"> 94</tt>  <tt class="py-line"><tt class="py-docstring">    L{probesetAnnotationMetadata}.</tt> </tt>
+<a name="L95"></a><tt class="py-lineno"> 95</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L96"></a><tt class="py-lineno"> 96</tt>  <tt class="py-line"><tt class="py-docstring">    @return: list of metadata keys</tt> </tt>
+<a name="L97"></a><tt class="py-lineno"> 97</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L98"></a><tt class="py-lineno"> 98</tt>  <tt class="py-line">    <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L99"></a><tt class="py-lineno"> 99</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">json</tt><tt class="py-op">.</tt><tt class="py-name">loads</tt><tt class="py-op">(</tt><tt id="link-24" class="py-name"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-24', 'd', 'link-19');">d</a></tt><tt class="py-op">(</tt><tt id="link-25" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-25', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"annot"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"main$metadataKeys"</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L100"></a><tt class="py-lineno">100</tt>  <tt class="py-line">    <tt class="py-keyword">except</tt> <tt class="py-name">AttributeError</tt><tt class="py-op">:</tt> </tt>
+<a name="L101"></a><tt class="py-lineno">101</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L102"></a><tt class="py-lineno">102</tt>  <tt class="py-line"> </tt>
+<a name="probesetAnnotationMetadata"></a><div id="probesetAnnotationMetadata-def"><a name="L103"></a><tt class="py-lineno">103</tt>  <tt class="py-line"> </tt>
+<a name="L104"></a><tt class="py-lineno">104</tt> <a class="py-toggle" href="#" id="probesetAnnotationMetadata-toggle" onclick="return toggle('probesetAnnotationMetadata');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#probesetAnnotationMetadata">probesetAnnotationMetadata</a><tt class="py-op">(</tt><tt class="py-param">probeset</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="probesetAnnotationMetadata-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="probesetAnnotationMetadata-expanded"><a name="L105"></a><tt class="py-lineno">105</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L106"></a><tt class="py-lineno">106</tt>  <tt class="py-line"><tt class="py-docstring">    Retrieve annotation metadata for a probeset. To understand the output use</tt> </tt>
+<a name="L107"></a><tt class="py-lineno">107</tt>  <tt class="py-line"><tt class="py-docstring">    L{metadataKeys}.</tt> </tt>
+<a name="L108"></a><tt class="py-lineno">108</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L109"></a><tt class="py-lineno">109</tt>  <tt class="py-line"><tt class="py-docstring">    @param probeset: valid probeset ID.</tt> </tt>
+<a name="L110"></a><tt class="py-lineno">110</tt>  <tt class="py-line"><tt class="py-docstring">    @return: list of metadata.</tt> </tt>
+<a name="L111"></a><tt class="py-lineno">111</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L112"></a><tt class="py-lineno">112</tt>  <tt class="py-line">    <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L113"></a><tt class="py-lineno">113</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">json</tt><tt class="py-op">.</tt><tt class="py-name">loads</tt><tt class="py-op">(</tt><tt id="link-26" class="py-name"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-26', 'd', 'link-19');">d</a></tt><tt class="py-op">(</tt><tt id="link-27" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-27', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"annot"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">hget</tt><tt class="py-op">(</tt><tt class="py-string">'probeset$metadata'</tt><tt class="py-op">,</tt> </tt>
+<a name="L114"></a><tt class="py-lineno">114</tt>  <tt class="py-line">                                                    <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">probeset</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L115"></a><tt class="py-lineno">115</tt>  <tt class="py-line">    <tt class="py-keyword">except</tt> <tt class="py-name">AttributeError</tt><tt class="py-op">:</tt> </tt>
+<a name="L116"></a><tt class="py-lineno">116</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L117"></a><tt class="py-lineno">117</tt>  <tt class="py-line"> </tt>
+<a name="geneToTrans"></a><div id="geneToTrans-def"><a name="L118"></a><tt class="py-lineno">118</tt>  <tt class="py-line"> </tt>
+<a name="L119"></a><tt class="py-lineno">119</tt> <a class="py-toggle" href="#" id="geneToTrans-toggle" onclick="return toggle('geneToTrans');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#geneToTrans">geneToTrans</a><tt class="py-op">(</tt><tt class="py-param">gene</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="geneToTrans-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="geneToTrans-expanded"><a name="L120"></a><tt class="py-lineno">120</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L121"></a><tt class="py-lineno">121</tt>  <tt class="py-line"><tt class="py-docstring">    Retrive transcription cluster IDs given a HGNC gene name, such as MBNL1 or</tt> </tt>
+<a name="L122"></a><tt class="py-lineno">122</tt>  <tt class="py-line"><tt class="py-docstring">    FOXP2.</tt> </tt>
+<a name="L123"></a><tt class="py-lineno">123</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L124"></a><tt class="py-lineno">124</tt>  <tt class="py-line"><tt class="py-docstring">    @param gene: A HGNC gene name, such as MBNL1 or FOXP2.</tt> </tt>
+<a name="L125"></a><tt class="py-lineno">125</tt>  <tt class="py-line"><tt class="py-docstring">    @return: set of transcription cluster IDs.</tt> </tt>
+<a name="L126"></a><tt class="py-lineno">126</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L127"></a><tt class="py-lineno">127</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">set</tt><tt class="py-op">(</tt><tt id="link-28" class="py-name"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-28', 'd', 'link-19');">d</a></tt><tt class="py-op">(</tt><tt class="py-name">i</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt id="link-29" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-29', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"annot"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">smembers</tt><tt class="py-op">(</tt><tt class="py-string">'search$usual$'</tt> <tt class="py-op">+</tt> </tt>
+<a name="L128"></a><tt class="py-lineno">128</tt>  <tt class="py-line">                                                         <tt class="py-name">gene</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L129"></a><tt class="py-lineno">129</tt>  <tt class="py-line"> </tt>
+<a name="extendedToTrans"></a><div id="extendedToTrans-def"><a name="L130"></a><tt class="py-lineno">130</tt>  <tt class="py-line"> </tt>
+<a name="L131"></a><tt class="py-lineno">131</tt> <a class="py-toggle" href="#" id="extendedToTrans-toggle" onclick="return toggle('extendedToTrans');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#extendedToTrans">extendedToTrans</a><tt class="py-op">(</tt><tt class="py-param">gene</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="extendedToTrans-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="extendedToTrans-expanded"><a name="L132"></a><tt class="py-lineno">132</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L133"></a><tt class="py-lineno">133</tt>  <tt class="py-line"><tt class="py-docstring">    Retrive transcription cluster IDs given a non-standard gene name, such as</tt> </tt>
+<a name="L134"></a><tt class="py-lineno">134</tt>  <tt class="py-line"><tt class="py-docstring">    OTTHUMT00000058841.</tt> </tt>
+<a name="L135"></a><tt class="py-lineno">135</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L136"></a><tt class="py-lineno">136</tt>  <tt class="py-line"><tt class="py-docstring">    @param gene: a non-standard gene name, e.g. OTTHUMT00000058841</tt> </tt>
+<a name="L137"></a><tt class="py-lineno">137</tt>  <tt class="py-line"><tt class="py-docstring">    @return: set of transcription clusters (usually just one)</tt> </tt>
+<a name="L138"></a><tt class="py-lineno">138</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L139"></a><tt class="py-lineno">139</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">set</tt><tt class="py-op">(</tt><tt id="link-30" class="py-name"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-30', 'd', 'link-19');">d</a></tt><tt class="py-op">(</tt><tt class="py-name">i</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt id="link-31" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-31', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"annot"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">smembers</tt><tt class="py-op">(</tt><tt class="py-string">'search$weird$'</tt> <tt class="py-op">+</tt> </tt>
+<a name="L140"></a><tt class="py-lineno">140</tt>  <tt class="py-line">                                                         <tt class="py-name">gene</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L141"></a><tt class="py-lineno">141</tt>  <tt class="py-line"> </tt>
+<a name="transToGene"></a><div id="transToGene-def"><a name="L142"></a><tt class="py-lineno">142</tt>  <tt class="py-line"> </tt>
+<a name="L143"></a><tt class="py-lineno">143</tt> <a class="py-toggle" href="#" id="transToGene-toggle" onclick="return toggle('transToGene');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#transToGene">transToGene</a><tt class="py-op">(</tt><tt class="py-param">trans</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="transToGene-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="transToGene-expanded"><a name="L144"></a><tt class="py-lineno">144</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L145"></a><tt class="py-lineno">145</tt>  <tt class="py-line"><tt class="py-docstring">    Retrieve the HUGO Gene Nomenclature Committee (HGNC) gene names associated</tt> </tt>
+<a name="L146"></a><tt class="py-lineno">146</tt>  <tt class="py-line"><tt class="py-docstring">    with a given transcription clusterID.</tt> </tt>
+<a name="L147"></a><tt class="py-lineno">147</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L148"></a><tt class="py-lineno">148</tt>  <tt class="py-line"><tt class="py-docstring">    @param trans: transcription cluster ID.</tt> </tt>
+<a name="L149"></a><tt class="py-lineno">149</tt>  <tt class="py-line"><tt class="py-docstring">    @return: set of transcription clusters (can be more than one, e.g. CFHR1,</tt> </tt>
+<a name="L150"></a><tt class="py-lineno">150</tt>  <tt class="py-line"><tt class="py-docstring">    CFHR2 and CFHR3 are all part of a single transcription cluster).</tt> </tt>
+<a name="L151"></a><tt class="py-lineno">151</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L152"></a><tt class="py-lineno">152</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">set</tt><tt class="py-op">(</tt><tt id="link-32" class="py-name"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-32', 'd', 'link-19');">d</a></tt><tt class="py-op">(</tt><tt class="py-name">i</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt id="link-33" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-33', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"annot"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">smembers</tt><tt class="py-op">(</tt> </tt>
+<a name="L153"></a><tt class="py-lineno">153</tt>  <tt class="py-line">            <tt class="py-string">"search$trans$usual$"</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">trans</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L154"></a><tt class="py-lineno">154</tt>  <tt class="py-line"> </tt>
+<a name="transToExtended"></a><div id="transToExtended-def"><a name="L155"></a><tt class="py-lineno">155</tt>  <tt class="py-line"> </tt>
+<a name="L156"></a><tt class="py-lineno">156</tt> <a class="py-toggle" href="#" id="transToExtended-toggle" onclick="return toggle('transToExtended');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#transToExtended">transToExtended</a><tt class="py-op">(</tt><tt class="py-param">trans</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="transToExtended-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="transToExtended-expanded"><a name="L157"></a><tt class="py-lineno">157</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L158"></a><tt class="py-lineno">158</tt>  <tt class="py-line"><tt class="py-docstring">    Retrieve the extended gene names associated with a given transcription</tt> </tt>
+<a name="L159"></a><tt class="py-lineno">159</tt>  <tt class="py-line"><tt class="py-docstring">    clusterID.</tt> </tt>
+<a name="L160"></a><tt class="py-lineno">160</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L161"></a><tt class="py-lineno">161</tt>  <tt class="py-line"><tt class="py-docstring">    @param trans: transcription cluster ID.</tt> </tt>
+<a name="L162"></a><tt class="py-lineno">162</tt>  <tt class="py-line"><tt class="py-docstring">    @return: set of transcription clusters.</tt> </tt>
+<a name="L163"></a><tt class="py-lineno">163</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L164"></a><tt class="py-lineno">164</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">set</tt><tt class="py-op">(</tt><tt id="link-34" class="py-name"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-34', 'd', 'link-19');">d</a></tt><tt class="py-op">(</tt><tt class="py-name">i</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt id="link-35" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-35', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"annot"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">smembers</tt><tt class="py-op">(</tt> </tt>
+<a name="L165"></a><tt class="py-lineno">165</tt>  <tt class="py-line">            <tt class="py-string">"search$trans$weird$"</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">trans</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L166"></a><tt class="py-lineno">166</tt>  <tt class="py-line"> </tt>
+<a name="alleleData"></a><div id="alleleData-def"><a name="L167"></a><tt class="py-lineno">167</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">cache</tt> </tt>
+<a name="L168"></a><tt class="py-lineno">168</tt> <a class="py-toggle" href="#" id="alleleData-toggle" onclick="return toggle('alleleData');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#alleleData">alleleData</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="alleleData-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="alleleData-expanded"><a name="L169"></a><tt class="py-lineno">169</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L170"></a><tt class="py-lineno">170</tt>  <tt class="py-line"><tt class="py-docstring">    Return patient data in form of quadruples: [modalAllele, progenitalAllele,</tt> </tt>
+<a name="L171"></a><tt class="py-lineno">171</tt>  <tt class="py-line"><tt class="py-docstring">    patient id, filename].</tt> </tt>
+<a name="L172"></a><tt class="py-lineno">172</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L173"></a><tt class="py-lineno">173</tt>  <tt class="py-line"><tt class="py-docstring">    @return: patient data.</tt> </tt>
+<a name="L174"></a><tt class="py-lineno">174</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L175"></a><tt class="py-lineno">175</tt>  <tt class="py-line">    <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L176"></a><tt class="py-lineno">176</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">json</tt><tt class="py-op">.</tt><tt class="py-name">loads</tt><tt class="py-op">(</tt><tt id="link-36" class="py-name"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-36', 'd', 'link-19');">d</a></tt><tt class="py-op">(</tt><tt id="link-37" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-37', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"probe"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">get</tt><tt class="py-op">(</tt><tt class="py-string">"main$alleleData$"</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L177"></a><tt class="py-lineno">177</tt>  <tt class="py-line">    <tt class="py-keyword">except</tt> <tt class="py-name">AttributeError</tt><tt class="py-op">:</tt> </tt>
+<a name="L178"></a><tt class="py-lineno">178</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L179"></a><tt class="py-lineno">179</tt>  <tt class="py-line"> </tt>
+<a name="totalProbesets"></a><div id="totalProbesets-def"><a name="L180"></a><tt class="py-lineno">180</tt>  <tt class="py-line"><tt class="py-decorator">@</tt><tt class="py-decorator">cache</tt> </tt>
+<a name="L181"></a><tt class="py-lineno">181</tt> <a class="py-toggle" href="#" id="totalProbesets-toggle" onclick="return toggle('totalProbesets');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#totalProbesets">totalProbesets</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="totalProbesets-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="totalProbesets-expanded"><a name="L182"></a><tt class="py-lineno">182</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L183"></a><tt class="py-lineno">183</tt>  <tt class="py-line"><tt class="py-docstring">    Returns the count of all probesets (irrespective of annotation level) in the</tt> </tt>
+<a name="L184"></a><tt class="py-lineno">184</tt>  <tt class="py-line"><tt class="py-docstring">    database</tt> </tt>
+<a name="L185"></a><tt class="py-lineno">185</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L186"></a><tt class="py-lineno">186</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt id="link-38" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-38', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"alterSplice"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">zcard</tt><tt class="py-op">(</tt><tt class="py-string">"probe$ASPvalue"</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L187"></a><tt class="py-lineno">187</tt>  <tt class="py-line"> </tt>
+<a name="transIter"></a><div id="transIter-def"><a name="L188"></a><tt class="py-lineno">188</tt>  <tt class="py-line"> </tt>
+<a name="L189"></a><tt class="py-lineno">189</tt> <a class="py-toggle" href="#" id="transIter-toggle" onclick="return toggle('transIter');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#transIter">transIter</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="transIter-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="transIter-expanded"><a name="L190"></a><tt class="py-lineno">190</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L191"></a><tt class="py-lineno">191</tt>  <tt class="py-line"><tt class="py-docstring">    Return an iterator through each transcription cluster in the database.</tt> </tt>
+<a name="L192"></a><tt class="py-lineno">192</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L193"></a><tt class="py-lineno">193</tt>  <tt class="py-line"><tt class="py-docstring">    @return: transcription cluster iterator.</tt> </tt>
+<a name="L194"></a><tt class="py-lineno">194</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L195"></a><tt class="py-lineno">195</tt>  <tt class="py-line">    <tt id="link-39" class="py-name" targets="Function transvis.io.transIter()=transvis.io-module.html#transIter"><a title="transvis.io.transIter" class="py-name" href="#" onclick="return doclink('link-39', 'transIter', 'link-39');">transIter</a></tt> <tt class="py-op">=</tt> <tt id="link-40" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-40', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"annot"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">scan_iter</tt><tt class="py-op">(</tt><tt class="py-name">match</tt><tt class="py-op">=</tt><tt class="py-string">"trans\$probeset\$*"</tt><tt class="py-op">)</tt> </tt>
+<a name="L196"></a><tt class="py-lineno">196</tt>  <tt class="py-line">    <tt class="py-keyword">for</tt> <tt class="py-name">elem</tt> <tt class="py-keyword">in</tt> <tt id="link-41" class="py-name"><a title="transvis.io.transIter" class="py-name" href="#" onclick="return doclink('link-41', 'transIter', 'link-39');">transIter</a></tt><tt class="py-op">:</tt> </tt>
+<a name="L197"></a><tt class="py-lineno">197</tt>  <tt class="py-line">        <tt class="py-keyword">yield</tt> <tt id="link-42" class="py-name"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-42', 'd', 'link-19');">d</a></tt><tt class="py-op">(</tt><tt class="py-name">elem</tt><tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">split</tt><tt class="py-op">(</tt><tt class="py-string">"$"</tt><tt class="py-op">)</tt><tt class="py-op">[</tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L198"></a><tt class="py-lineno">198</tt>  <tt class="py-line"> </tt>
+<a name="probesetChipMetadata"></a><div id="probesetChipMetadata-def"><a name="L199"></a><tt class="py-lineno">199</tt>  <tt class="py-line"> </tt>
+<a name="L200"></a><tt class="py-lineno">200</tt> <a class="py-toggle" href="#" id="probesetChipMetadata-toggle" onclick="return toggle('probesetChipMetadata');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#probesetChipMetadata">probesetChipMetadata</a><tt class="py-op">(</tt><tt class="py-param">probeset</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="probesetChipMetadata-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="probesetChipMetadata-expanded"><a name="L201"></a><tt class="py-lineno">201</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L202"></a><tt class="py-lineno">202</tt>  <tt class="py-line"><tt class="py-docstring">    Return the chip metadata for a probeset.</tt> </tt>
+<a name="L203"></a><tt class="py-lineno">203</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L204"></a><tt class="py-lineno">204</tt>  <tt class="py-line"><tt class="py-docstring">    @param probeset: valid probeset ID.</tt> </tt>
+<a name="L205"></a><tt class="py-lineno">205</tt>  <tt class="py-line"><tt class="py-docstring">    @return: a list of up to 4 triples of the form</tt> </tt>
+<a name="L206"></a><tt class="py-lineno">206</tt>  <tt class="py-line"><tt class="py-docstring">    [25-bases probe length, Y coord, X coord]. You have to take the complement</tt> </tt>
+<a name="L207"></a><tt class="py-lineno">207</tt>  <tt class="py-line"><tt class="py-docstring">    of the probe sequence before using BLAST.</tt> </tt>
+<a name="L208"></a><tt class="py-lineno">208</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L209"></a><tt class="py-lineno">209</tt>  <tt class="py-line">    <tt class="py-keyword">try</tt><tt class="py-op">:</tt> </tt>
+<a name="L210"></a><tt class="py-lineno">210</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">json</tt><tt class="py-op">.</tt><tt class="py-name">loads</tt><tt class="py-op">(</tt><tt id="link-43" class="py-name"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-43', 'd', 'link-19');">d</a></tt><tt class="py-op">(</tt><tt id="link-44" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-44', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"probe"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt> </tt>
+<a name="L211"></a><tt class="py-lineno">211</tt>  <tt class="py-line">                            <tt class="py-name">hget</tt><tt class="py-op">(</tt><tt class="py-string">"probes$metadata"</tt><tt class="py-op">,</tt> <tt id="link-45" class="py-name"><a title="transvis.utils.convertToStr" class="py-name" href="#" onclick="return doclink('link-45', 'convertToStr', 'link-23');">convertToStr</a></tt><tt class="py-op">(</tt><tt class="py-name">probeset</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+<a name="L212"></a><tt class="py-lineno">212</tt>  <tt class="py-line">    <tt class="py-keyword">except</tt> <tt class="py-name">AttributeError</tt><tt class="py-op">:</tt> </tt>
+<a name="L213"></a><tt class="py-lineno">213</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L214"></a><tt class="py-lineno">214</tt>  <tt class="py-line"> </tt>
+<a name="probesetPatientData"></a><div id="probesetPatientData-def"><a name="L215"></a><tt class="py-lineno">215</tt>  <tt class="py-line"> </tt>
+<a name="L216"></a><tt class="py-lineno">216</tt> <a class="py-toggle" href="#" id="probesetPatientData-toggle" onclick="return toggle('probesetPatientData');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#probesetPatientData">probesetPatientData</a><tt class="py-op">(</tt><tt class="py-param">probeset</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="probesetPatientData-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="probesetPatientData-expanded"><a name="L217"></a><tt class="py-lineno">217</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L218"></a><tt class="py-lineno">218</tt>  <tt class="py-line"><tt class="py-docstring">    Return all probe intensities for a given probeset. The results can be</tt> </tt>
+<a name="L219"></a><tt class="py-lineno">219</tt>  <tt class="py-line"><tt class="py-docstring">    associated with patients by looking at output of L{alleleData}, and are</tt> </tt>
+<a name="L220"></a><tt class="py-lineno">220</tt>  <tt class="py-line"><tt class="py-docstring">    produced in the same order.</tt> </tt>
+<a name="L221"></a><tt class="py-lineno">221</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L222"></a><tt class="py-lineno">222</tt>  <tt class="py-line"><tt class="py-docstring">    @param probeset: valid probeset ID.</tt> </tt>
+<a name="L223"></a><tt class="py-lineno">223</tt>  <tt class="py-line"><tt class="py-docstring">    @return: return n tuples, where n is the number of patients. Each tuple has</tt> </tt>
+<a name="L224"></a><tt class="py-lineno">224</tt>  <tt class="py-line"><tt class="py-docstring">    arity k, with k between 1 and 4, corresponding to the number of probes in</tt> </tt>
+<a name="L225"></a><tt class="py-lineno">225</tt>  <tt class="py-line"><tt class="py-docstring">    the probeset.</tt> </tt>
+<a name="L226"></a><tt class="py-lineno">226</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L227"></a><tt class="py-lineno">227</tt>  <tt class="py-line">    <tt class="py-name">address</tt> <tt class="py-op">=</tt> <tt class="py-string">"probes$probeset$"</tt> <tt class="py-op">+</tt> <tt class="py-name">str</tt><tt class="py-op">(</tt><tt class="py-name">probeset</tt><tt class="py-op">)</tt> </tt>
+<a name="L228"></a><tt class="py-lineno">228</tt>  <tt class="py-line">    <tt class="py-name">patientData</tt> <tt class="py-op">=</tt> <tt id="link-46" class="py-name"><a title="transvis.io.redisConn" class="py-name" href="#" onclick="return doclink('link-46', 'redisConn', 'link-6');">redisConn</a></tt><tt class="py-op">[</tt><tt class="py-string">"probe"</tt><tt class="py-op">]</tt><tt class="py-op">.</tt><tt class="py-name">lrange</tt><tt class="py-op">(</tt><tt class="py-name">address</tt><tt class="py-op">,</tt> <tt class="py-number">0</tt><tt class="py-op">,</tt> <tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">)</tt> </tt>
+<a name="L229"></a><tt class="py-lineno">229</tt>  <tt class="py-line"> </tt>
+<a name="L230"></a><tt class="py-lineno">230</tt>  <tt class="py-line">    <tt class="py-comment"># remember to reverse the list</tt> </tt>
+<a name="L231"></a><tt class="py-lineno">231</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-op">[</tt><tt class="py-name">json</tt><tt class="py-op">.</tt><tt class="py-name">loads</tt><tt class="py-op">(</tt><tt id="link-47" class="py-name"><a title="transvis.utils.d" class="py-name" href="#" onclick="return doclink('link-47', 'd', 'link-19');">d</a></tt><tt class="py-op">(</tt><tt class="py-name">i</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> <tt class="py-keyword">for</tt> <tt class="py-name">i</tt> <tt class="py-keyword">in</tt> <tt class="py-name">patientData</tt><tt class="py-op">[</tt><tt class="py-op">:</tt><tt class="py-op">:</tt><tt class="py-op">-</tt><tt class="py-number">1</tt><tt class="py-op">]</tt><tt class="py-op">]</tt> </tt>
+</div><a name="L232"></a><tt class="py-lineno">232</tt>  <tt class="py-line"> </tt>
+<a name="probesetData"></a><div id="probesetData-def"><a name="L233"></a><tt class="py-lineno">233</tt> <a class="py-toggle" href="#" id="probesetData-toggle" onclick="return toggle('probesetData');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="transvis.io-module.html#probesetData">probesetData</a><tt class="py-op">(</tt><tt class="py-param">probeset</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="probesetData-collapsed" style="display:none;" pad="+++" indent="++++"></div><div id="probesetData-expanded"><a name="L234"></a><tt class="py-lineno">234</tt>  <tt class="py-line">    <tt class="py-docstring">"""</tt> </tt>
+<a name="L235"></a><tt class="py-lineno">235</tt>  <tt class="py-line"><tt class="py-docstring">        Return the same data as L{probesetPatientData}, but aggregated per</tt> </tt>
+<a name="L236"></a><tt class="py-lineno">236</tt>  <tt class="py-line"><tt class="py-docstring">        probeset as opposed to per patient.</tt> </tt>
+<a name="L237"></a><tt class="py-lineno">237</tt>  <tt class="py-line"><tt class="py-docstring">    """</tt> </tt>
+<a name="L238"></a><tt class="py-lineno">238</tt>  <tt class="py-line">    <tt class="py-keyword">return</tt> <tt class="py-name">zip</tt><tt class="py-op">(</tt><tt class="py-op">*</tt><tt id="link-48" class="py-name" targets="Function transvis.io.probesetPatientData()=transvis.io-module.html#probesetPatientData"><a title="transvis.io.probesetPatientData" class="py-name" href="#" onclick="return doclink('link-48', 'probesetPatientData', 'link-48');">probesetPatientData</a></tt><tt class="py-op">(</tt><tt class="py-name">probeset</tt><tt class="py-op">)</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L239"></a><tt class="py-lineno">239</tt>  <tt class="py-line"> </tt>
+<a name="L240"></a><tt class="py-lineno">240</tt>  <tt class="py-line"><tt class="py-comment"># TODO make these to be tests.</tt> </tt>
+<a name="L241"></a><tt class="py-lineno">241</tt>  <tt class="py-line"><tt class="py-comment"># initDB()</tt> </tt>
+<a name="L242"></a><tt class="py-lineno">242</tt>  <tt class="py-line"><tt class="py-comment"># print(metadataKeys())</tt> </tt>
+<a name="L243"></a><tt class="py-lineno">243</tt>  <tt class="py-line"><tt class="py-comment"># print(transToProbeset(2315100))</tt> </tt>
+<a name="L244"></a><tt class="py-lineno">244</tt>  <tt class="py-line"><tt class="py-comment"># print(geneToTrans("MBNL1"))</tt> </tt>
+<a name="L245"></a><tt class="py-lineno">245</tt>  <tt class="py-line"><tt class="py-comment"># print(probesetAnnotationMetadata(2315104))</tt> </tt>
+<a name="L246"></a><tt class="py-lineno">246</tt>  <tt class="py-line"><tt class="py-comment"># print(type(convertToStr(b'10')))</tt> </tt>
+<a name="L247"></a><tt class="py-lineno">247</tt>  <tt class="py-line"><tt class="py-comment">#print(list(probesetToTrans(b'3307988')))</tt> </tt>
+<a name="L248"></a><tt class="py-lineno">248</tt>  <tt class="py-line"><tt class="py-comment"># print(extendedToTrans('NONHSAT051717'))</tt> </tt>
+<a name="L249"></a><tt class="py-lineno">249</tt>  <tt class="py-line"><tt class="py-comment"># print(transToGene(2315100))</tt> </tt>
+<a name="L250"></a><tt class="py-lineno">250</tt>  <tt class="py-line"><tt class="py-comment"># print(transToExtended(2315100))</tt> </tt>
+<a name="L251"></a><tt class="py-lineno">251</tt>  <tt class="py-line"><tt class="py-comment"># print(alleleData())</tt> </tt>
+<a name="L252"></a><tt class="py-lineno">252</tt>  <tt class="py-line"><tt class="py-comment"># print(probesetChipMetadata(3973794))</tt> </tt>
+<a name="L253"></a><tt class="py-lineno">253</tt>  <tt class="py-line"><tt class="py-comment"># print(probesetPatientData(2819466))</tt> </tt>
+<a name="L254"></a><tt class="py-lineno">254</tt>  <tt class="py-line"><tt class="py-comment"># print(dataForProbeset(2819466))</tt> </tt>
+<a name="L255"></a><tt class="py-lineno">255</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="transvis-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Apr 16 13:07:04 2017
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

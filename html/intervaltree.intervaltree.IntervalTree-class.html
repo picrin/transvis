@@ -1,0 +1,2631 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>intervaltree.intervaltree.IntervalTree</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="intervaltree.intervaltree-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;intervaltree ::
+        <a href="intervaltree.intervaltree-module.html">Module&nbsp;intervaltree</a> ::
+        Class&nbsp;IntervalTree
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="intervaltree.intervaltree.IntervalTree-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS DESCRIPTION ==================== -->
+<h1 class="epydoc">Class IntervalTree</h1><p class="nomargin-top"><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+       object --+            
+                |            
+    _abcoll.Sized --+        
+                    |        
+       object --+   |        
+                |   |        
+ _abcoll.Iterable --+        
+                    |        
+       object --+   |        
+                |   |        
+_abcoll.Container --+        
+                    |        
+          _abcoll.Set --+    
+                        |    
+       _abcoll.MutableSet --+
+                            |
+                           <strong class="uidshort">IntervalTree</strong>
+</pre>
+
+<hr />
+<pre class="literalblock">
+
+A binary lookup tree of intervals.
+The intervals contained in the tree are represented using ``Interval(a, b, data)`` objects.
+Each such object represents a half-open interval ``[a, b)`` with optional data.
+
+Examples:
+---------
+
+Initialize a blank tree::
+
+    &gt;&gt;&gt; tree = IntervalTree()
+    &gt;&gt;&gt; tree
+    IntervalTree()
+
+Initialize a tree from an iterable set of Intervals in O(n * log n)::
+
+    &gt;&gt;&gt; tree = IntervalTree([Interval(-10, 10), Interval(-20.0, -10.0)])
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(-20.0, -10.0), Interval(-10, 10)])
+    &gt;&gt;&gt; len(tree)
+    2
+
+Note that this is a set, i.e. repeated intervals are ignored. However,
+Intervals with different data fields are regarded as different::
+
+    &gt;&gt;&gt; tree = IntervalTree([Interval(-10, 10), Interval(-10, 10), Interval(-10, 10, &quot;x&quot;)])
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(-10, 10), Interval(-10, 10, 'x')])
+    &gt;&gt;&gt; len(tree)
+    2
+
+Insertions::
+    &gt;&gt;&gt; tree = IntervalTree()
+    &gt;&gt;&gt; tree[0:1] = &quot;data&quot;
+    &gt;&gt;&gt; tree.add(Interval(10, 20))
+    &gt;&gt;&gt; tree.addi(19.9, 20)
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(0, 1, 'data'), Interval(10, 20), Interval(19.9, 20)])
+    &gt;&gt;&gt; tree.update([Interval(19.9, 20.1), Interval(20.1, 30)])
+    &gt;&gt;&gt; len(tree)
+    5
+
+    Inserting the same Interval twice does nothing::
+        &gt;&gt;&gt; tree = IntervalTree()
+        &gt;&gt;&gt; tree[-10:20] = &quot;arbitrary data&quot;
+        &gt;&gt;&gt; tree[-10:20] = None  # Note that this is also an insertion
+        &gt;&gt;&gt; tree
+        IntervalTree([Interval(-10, 20), Interval(-10, 20, 'arbitrary data')])
+        &gt;&gt;&gt; tree[-10:20] = None  # This won't change anything
+        &gt;&gt;&gt; tree[-10:20] = &quot;arbitrary data&quot; # Neither will this
+        &gt;&gt;&gt; len(tree)
+        2
+
+Deletions::
+    &gt;&gt;&gt; tree = IntervalTree(Interval(b, e) for b, e in [(-10, 10), (-20, -10), (10, 20)])
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(-20, -10), Interval(-10, 10), Interval(10, 20)])
+    &gt;&gt;&gt; tree.remove(Interval(-10, 10))
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(-20, -10), Interval(10, 20)])
+    &gt;&gt;&gt; tree.remove(Interval(-10, 10))
+    Traceback (most recent call last):
+    ...
+    ValueError
+    &gt;&gt;&gt; tree.discard(Interval(-10, 10))  # Same as remove, but no exception on failure
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(-20, -10), Interval(10, 20)])
+    
+Delete intervals, overlapping a given point::
+
+    &gt;&gt;&gt; tree = IntervalTree([Interval(-1.1, 1.1), Interval(-0.5, 1.5), Interval(0.5, 1.7)])
+    &gt;&gt;&gt; tree.remove_overlap(1.1)
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(-1.1, 1.1)])
+    
+Delete intervals, overlapping an interval::
+
+    &gt;&gt;&gt; tree = IntervalTree([Interval(-1.1, 1.1), Interval(-0.5, 1.5), Interval(0.5, 1.7)])
+    &gt;&gt;&gt; tree.remove_overlap(0, 0.5)
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(0.5, 1.7)])
+    &gt;&gt;&gt; tree.remove_overlap(1.7, 1.8)
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(0.5, 1.7)])
+    &gt;&gt;&gt; tree.remove_overlap(1.6, 1.6)  # Null interval does nothing
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(0.5, 1.7)])
+    &gt;&gt;&gt; tree.remove_overlap(1.6, 1.5)  # Ditto
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(0.5, 1.7)])
+    
+Delete intervals, enveloped in the range::
+
+    &gt;&gt;&gt; tree = IntervalTree([Interval(-1.1, 1.1), Interval(-0.5, 1.5), Interval(0.5, 1.7)])
+    &gt;&gt;&gt; tree.remove_envelop(-1.0, 1.5)
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(-1.1, 1.1), Interval(0.5, 1.7)])
+    &gt;&gt;&gt; tree.remove_envelop(-1.1, 1.5)
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(0.5, 1.7)])
+    &gt;&gt;&gt; tree.remove_envelop(0.5, 1.5)
+    &gt;&gt;&gt; tree
+    IntervalTree([Interval(0.5, 1.7)])
+    &gt;&gt;&gt; tree.remove_envelop(0.5, 1.7)
+    &gt;&gt;&gt; tree
+    IntervalTree()
+    
+Point/interval overlap queries::
+
+    &gt;&gt;&gt; tree = IntervalTree([Interval(-1.1, 1.1), Interval(-0.5, 1.5), Interval(0.5, 1.7)])
+    &gt;&gt;&gt; assert tree[-1.1]         == set([Interval(-1.1, 1.1)])
+    &gt;&gt;&gt; assert tree.search(1.1)   == set([Interval(-0.5, 1.5), Interval(0.5, 1.7)])   # Same as tree[1.1]
+    &gt;&gt;&gt; assert tree[-0.5:0.5]     == set([Interval(-0.5, 1.5), Interval(-1.1, 1.1)])  # Interval overlap query
+    &gt;&gt;&gt; assert tree.search(1.5, 1.5) == set()                                         # Same as tree[1.5:1.5]
+    &gt;&gt;&gt; assert tree.search(1.5) == set([Interval(0.5, 1.7)])                          # Same as tree[1.5]
+
+    &gt;&gt;&gt; assert tree.search(1.7, 1.8) == set()
+
+Envelop queries::
+
+    &gt;&gt;&gt; assert tree.search(-0.5, 0.5, strict=True) == set()
+    &gt;&gt;&gt; assert tree.search(-0.4, 1.7, strict=True) == set([Interval(0.5, 1.7)])
+    
+Membership queries::
+
+    &gt;&gt;&gt; tree = IntervalTree([Interval(-1.1, 1.1), Interval(-0.5, 1.5), Interval(0.5, 1.7)])
+    &gt;&gt;&gt; Interval(-0.5, 0.5) in tree
+    False
+    &gt;&gt;&gt; Interval(-1.1, 1.1) in tree
+    True
+    &gt;&gt;&gt; Interval(-1.1, 1.1, &quot;x&quot;) in tree
+    False
+    &gt;&gt;&gt; tree.overlaps(-1.1)
+    True
+    &gt;&gt;&gt; tree.overlaps(1.7)
+    False
+    &gt;&gt;&gt; tree.overlaps(1.7, 1.8)
+    False
+    &gt;&gt;&gt; tree.overlaps(-1.2, -1.1)
+    False
+    &gt;&gt;&gt; tree.overlaps(-1.2, -1.0)
+    True
+
+Sizing::
+
+    &gt;&gt;&gt; tree = IntervalTree([Interval(-1.1, 1.1), Interval(-0.5, 1.5), Interval(0.5, 1.7)])
+    &gt;&gt;&gt; len(tree)
+    3
+    &gt;&gt;&gt; tree.is_empty()
+    False
+    &gt;&gt;&gt; IntervalTree().is_empty()
+    True
+    &gt;&gt;&gt; not tree
+    False
+    &gt;&gt;&gt; not IntervalTree()
+    True
+    &gt;&gt;&gt; print(tree.begin())    # using print() because of floats in Python 2.6
+    -1.1
+    &gt;&gt;&gt; print(tree.end())      # ditto
+    1.7
+    
+Iteration::
+
+    &gt;&gt;&gt; tree = IntervalTree([Interval(-11, 11), Interval(-5, 15), Interval(5, 17)])
+    &gt;&gt;&gt; [iv.begin for iv in sorted(tree)]
+    [-11, -5, 5]
+    &gt;&gt;&gt; assert tree.items() == set([Interval(-5, 15), Interval(-11, 11), Interval(5, 17)])
+
+Copy- and typecasting, pickling::
+
+    &gt;&gt;&gt; tree0 = IntervalTree([Interval(0, 1, &quot;x&quot;), Interval(1, 2, [&quot;x&quot;])])
+    &gt;&gt;&gt; tree1 = IntervalTree(tree0)  # Shares Interval objects
+    &gt;&gt;&gt; tree2 = tree0.copy()         # Shallow copy (same as above, as Intervals are singletons)
+    &gt;&gt;&gt; import pickle
+    &gt;&gt;&gt; tree3 = pickle.loads(pickle.dumps(tree0))  # Deep copy
+    &gt;&gt;&gt; list(tree0[1])[0].data[0] = &quot;y&quot;  # affects shallow copies, but not deep copies
+    &gt;&gt;&gt; tree0
+    IntervalTree([Interval(0, 1, 'x'), Interval(1, 2, ['y'])])
+    &gt;&gt;&gt; tree1
+    IntervalTree([Interval(0, 1, 'x'), Interval(1, 2, ['y'])])
+    &gt;&gt;&gt; tree2
+    IntervalTree([Interval(0, 1, 'x'), Interval(1, 2, ['y'])])
+    &gt;&gt;&gt; tree3
+    IntervalTree([Interval(0, 1, 'x'), Interval(1, 2, ['x'])])
+    
+Equality testing::
+
+    &gt;&gt;&gt; IntervalTree([Interval(0, 1)]) == IntervalTree([Interval(0, 1)])
+    True
+    &gt;&gt;&gt; IntervalTree([Interval(0, 1)]) == IntervalTree([Interval(0, 1, &quot;x&quot;)])
+    False
+
+</pre>
+
+<!-- ==================== NESTED CLASSES ==================== -->
+<a name="section-NestedClasses"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Nested Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-NestedClasses"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>_abcoll.Sized</code></b>:
+      <code><a href="abc.ABCMeta-class.html">__metaclass__</a></code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">intervals</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Set up a tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#copy" class="summary-sig-name">copy</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Construct a new IntervalTree using shallow copies of the intervals in
+      the source tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.copy">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_add_boundaries"></a><span class="summary-sig-name">_add_boundaries</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">interval</span>)</span><br />
+      Records the boundaries of the interval in the boundary table.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree._add_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_remove_boundaries"></a><span class="summary-sig-name">_remove_boundaries</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">interval</span>)</span><br />
+      Removes the boundaries of the interval from the boundary table.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree._remove_boundaries">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#add" class="summary-sig-name">add</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">interval</span>)</span><br />
+      Adds an interval to the tree, if not already present.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.add">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#append" class="summary-sig-name">append</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">interval</span>)</span><br />
+      Adds an interval to the tree, if not already present.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.add">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#addi" class="summary-sig-name">addi</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">begin</span>,
+        <span class="summary-sig-arg">end</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Shortcut for add(Interval(begin, end, data)).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.addi">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#appendi" class="summary-sig-name">appendi</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">begin</span>,
+        <span class="summary-sig-arg">end</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Shortcut for add(Interval(begin, end, data)).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.addi">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#update" class="summary-sig-name">update</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">intervals</span>)</span><br />
+      Given an iterable of intervals, add them to the tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.update">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="extend"></a><span class="summary-sig-name">extend</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">intervals</span>)</span><br />
+      Deprecated: Replaced by update().</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.extend">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#remove" class="summary-sig-name">remove</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">interval</span>)</span><br />
+      Removes an interval from the tree, if present.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.remove">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#removei" class="summary-sig-name">removei</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">begin</span>,
+        <span class="summary-sig-arg">end</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Shortcut for remove(Interval(begin, end, data)).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.removei">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#discard" class="summary-sig-name">discard</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">interval</span>)</span><br />
+      Removes an interval from the tree, if present.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.discard">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#discardi" class="summary-sig-name">discardi</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">begin</span>,
+        <span class="summary-sig-arg">end</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Shortcut for discard(Interval(begin, end, data)).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.discardi">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="difference"></a><span class="summary-sig-name">difference</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Returns a new tree, comprising all intervals in self but not in 
+      other.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.difference">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="difference_update"></a><span class="summary-sig-name">difference_update</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Removes all intervals in other from self.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.difference_update">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="union"></a><span class="summary-sig-name">union</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Returns a new tree, comprising all intervals from self and other.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.union">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="intersection"></a><span class="summary-sig-name">intersection</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Returns a new tree of all intervals common to both self and other.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.intersection">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="intersection_update"></a><span class="summary-sig-name">intersection_update</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Removes intervals from self unless they also exist in other.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.intersection_update">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="symmetric_difference"></a><span class="summary-sig-name">symmetric_difference</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Return a tree with elements only in self or other but not both.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.symmetric_difference">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="symmetric_difference_update"></a><span class="summary-sig-name">symmetric_difference_update</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Throws out all intervals except those only in self or other, not 
+      both.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.symmetric_difference_update">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#remove_overlap" class="summary-sig-name">remove_overlap</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">begin</span>,
+        <span class="summary-sig-arg">end</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Removes all intervals overlapping the given point or range.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.remove_overlap">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#remove_envelop" class="summary-sig-name">remove_envelop</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">begin</span>,
+        <span class="summary-sig-arg">end</span>)</span><br />
+      Removes all intervals completely enveloped in the given range.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.remove_envelop">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="chop"></a><span class="summary-sig-name">chop</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">begin</span>,
+        <span class="summary-sig-arg">end</span>,
+        <span class="summary-sig-arg">datafunc</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Like remove_envelop(), but trims back Intervals hanging into the 
+      chopped area so that nothing overlaps.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.chop">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#slice" class="summary-sig-name">slice</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">point</span>,
+        <span class="summary-sig-arg">datafunc</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Split Intervals that overlap point into two new Intervals.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.slice">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#clear" class="summary-sig-name">clear</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Empties the tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.clear">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#find_nested" class="summary-sig-name">find_nested</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns a dictionary mapping parent intervals to sets of intervals 
+      overlapped by and contained in the parent.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.find_nested">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#overlaps" class="summary-sig-name">overlaps</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">begin</span>,
+        <span class="summary-sig-arg">end</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns whether some interval in the tree overlaps the given point or
+      range.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.overlaps">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#overlaps_point" class="summary-sig-name">overlaps_point</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">p</span>)</span><br />
+      Returns whether some interval in the tree overlaps p.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.overlaps_point">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#overlaps_range" class="summary-sig-name">overlaps_range</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">begin</span>,
+        <span class="summary-sig-arg">end</span>)</span><br />
+      Returns whether some interval in the tree overlaps the given range.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.overlaps_range">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#split_overlaps" class="summary-sig-name">split_overlaps</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Finds all intervals with overlapping ranges and splits them along the
+      range boundaries.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.split_overlaps">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#merge_overlaps" class="summary-sig-name">merge_overlaps</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data_reducer</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data_initializer</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Finds all intervals with overlapping ranges and merges them
+into a single interval.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.merge_overlaps">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#merge_equals" class="summary-sig-name">merge_equals</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">data_reducer</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">data_initializer</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Finds all intervals with equal ranges and merges them
+into a single interval.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.merge_equals">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#items" class="summary-sig-name">items</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Constructs and returns a set of all intervals in the tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.items">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#is_empty" class="summary-sig-name">is_empty</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns whether the tree is empty.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.is_empty">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#search" class="summary-sig-name">search</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">begin</span>,
+        <span class="summary-sig-arg">end</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">strict</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Returns a set of all intervals overlapping the given range.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.search">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#begin" class="summary-sig-name">begin</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the lower bound of the first interval in the tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.begin">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#end" class="summary-sig-name">end</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the upper bound of the last interval in the tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.end">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#range" class="summary-sig-name">range</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns a minimum-spanning Interval that encloses all the members of 
+      this IntervalTree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.range">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#span" class="summary-sig-name">span</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns the length of the minimum-spanning Interval that encloses all
+      the members of this IntervalTree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.span">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#print_structure" class="summary-sig-name">print_structure</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">tostring</span>=<span class="summary-sig-default">False</span>)</span><br />
+      ## FOR DEBUGGING ONLY ## Pretty-prints the structure of the tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.print_structure">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="verify"></a><span class="summary-sig-name">verify</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      ## FOR DEBUGGING ONLY ## Checks the table to ensure that the 
+      invariants are held.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.verify">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#score" class="summary-sig-name">score</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">full_report</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Returns a number between 0 and 1, indicating how suboptimal the tree 
+      is.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.score">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#__getitem__" class="summary-sig-name">__getitem__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">index</span>)</span><br />
+      Returns a set of all intervals overlapping the given index or 
+slice.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__getitem__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#__setitem__" class="summary-sig-name">__setitem__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">index</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Adds a new interval to the tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__setitem__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__delitem__"></a><span class="summary-sig-name">__delitem__</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">point</span>)</span><br />
+      Delete all items overlapping point.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__delitem__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#__contains__" class="summary-sig-name">__contains__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">item</span>)</span><br />
+      Returns whether item exists as an Interval in the tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__contains__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#containsi" class="summary-sig-name">containsi</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">begin</span>,
+        <span class="summary-sig-arg">end</span>,
+        <span class="summary-sig-arg">data</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Shortcut for (Interval(begin, end, data) in tree).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.containsi">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#__iter__" class="summary-sig-name">__iter__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns an iterator over all the intervals in the tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__iter__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#iter" class="summary-sig-name">iter</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns an iterator over all the intervals in the tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__iter__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#__len__" class="summary-sig-name">__len__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns how many intervals are in the tree.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__len__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#__eq__" class="summary-sig-name">__eq__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">other</span>)</span><br />
+      Whether two IntervalTrees are equal.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__eq__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#__repr__" class="summary-sig-name">__repr__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :rtype: str</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__repr__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#__str__" class="summary-sig-name">__str__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      :rtype: str</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__repr__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="intervaltree.intervaltree.IntervalTree-class.html#__reduce__" class="summary-sig-name">__reduce__</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      For pickle-ing.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__reduce__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>_abcoll.MutableSet</code></b>:
+      <code>__iand__</code>,
+      <code>__ior__</code>,
+      <code>__isub__</code>,
+      <code>__ixor__</code>,
+      <code>pop</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>_abcoll.Set</code></b>:
+      <code>__and__</code>,
+      <code>__ge__</code>,
+      <code>__gt__</code>,
+      <code>__le__</code>,
+      <code>__lt__</code>,
+      <code>__ne__</code>,
+      <code>__or__</code>,
+      <code>__rand__</code>,
+      <code>__ror__</code>,
+      <code>__rsub__</code>,
+      <code>__rxor__</code>,
+      <code>__sub__</code>,
+      <code>__xor__</code>,
+      <code>isdisjoint</code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>_abcoll.Set</code></b> (private):
+      <code>_hash</code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__delattr__</code>,
+      <code>__format__</code>,
+      <code>__getattribute__</code>,
+      <code>__new__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__setattr__</code>,
+      <code>__sizeof__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="from_tuples"></a><span class="summary-sig-name">from_tuples</span>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">tups</span>)</span><br />
+      Create a new IntervalTree from an iterable of 2- or 3-tuples,
+ where the tuple lists begin, end, and optionally data.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.from_tuples">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>_abcoll.Set</code></b> (private):
+      <code>_from_iterable</code>
+      </p></div>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>_abcoll.Sized</code></b>:
+      <code>__subclasshook__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__abstractmethods__"></a><span class="summary-name">__abstractmethods__</span> = <code title="frozenset([])"><code class="variable-group">frozenset([</code><code class="variable-group">])</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="intervaltree.intervaltree.IntervalTree-class.html#_abc_negative_cache" class="summary-name" onclick="show_private();">_abc_negative_cache</a> = <code title="&lt;_weakrefset.WeakSet object at 0x7efc06164090&gt;">&lt;_weakrefset.WeakSet object at 0x7efc061<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_abc_negative_cache_version"></a><span class="summary-name">_abc_negative_cache_version</span> = <code title="17">17</code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_abc_registry"></a><span class="summary-name">_abc_registry</span> = <code title="&lt;_weakrefset.WeakSet object at 0x7efc06162fd0&gt;">&lt;_weakrefset.WeakSet object at 0x7efc06162fd0&gt;</code>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>_abcoll.Set</code></b>:
+      <code>__hash__</code>
+      </p>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code>_abcoll.Sized</code></b> (private):
+      <code>_abc_cache</code>
+      </p></div>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__init__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">intervals</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Constructor)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__init__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Set up a tree. If intervals is provided, add all the intervals to the 
+  tree.</p>
+  <p>Completes in O(n*log n) time.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__init__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="copy"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">copy</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.copy">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Construct a new IntervalTree using shallow copies of the intervals in 
+  the source tree.</p>
+  <p>Completes in O(n*log n) time. :rtype: IntervalTree</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="add"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">interval</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.add">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds an interval to the tree, if not already present.</p>
+  <p>Completes in O(log n) time.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        _abcoll.MutableSet.add
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="append"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">append</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">interval</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.add">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds an interval to the tree, if not already present.</p>
+  <p>Completes in O(log n) time.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="addi"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">addi</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">begin</span>,
+        <span class="sig-arg">end</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.addi">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Shortcut for add(Interval(begin, end, data)).</p>
+  <p>Completes in O(log n) time.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="appendi"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">appendi</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">begin</span>,
+        <span class="sig-arg">end</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.addi">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Shortcut for add(Interval(begin, end, data)).</p>
+  <p>Completes in O(log n) time.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="update"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">update</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">intervals</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.update">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Given an iterable of intervals, add them to the tree.</p>
+  <p>Completes in O(m*log(n+m), where m = number of intervals to add.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="remove"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">remove</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">interval</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.remove">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes an interval from the tree, if present. If not, raises 
+  ValueError.</p>
+  <p>Completes in O(log n) time.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        _abcoll.MutableSet.remove
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="removei"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">removei</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">begin</span>,
+        <span class="sig-arg">end</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.removei">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Shortcut for remove(Interval(begin, end, data)).</p>
+  <p>Completes in O(log n) time.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="discard"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">discard</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">interval</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.discard">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Removes an interval from the tree, if present. If not, does 
+  nothing.</p>
+  <p>Completes in O(log n) time.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        _abcoll.MutableSet.discard
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="discardi"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">discardi</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">begin</span>,
+        <span class="sig-arg">end</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.discardi">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Shortcut for discard(Interval(begin, end, data)).</p>
+  <p>Completes in O(log n) time.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="remove_overlap"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">remove_overlap</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">begin</span>,
+        <span class="sig-arg">end</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.remove_overlap">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Removes all intervals overlapping the given point or range.
+
+Completes in O((r+m)*log n) time, where:
+  * n = size of the tree
+  * m = number of matches
+  * r = size of the search range (this is 1 for a point)
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="remove_envelop"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">remove_envelop</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">begin</span>,
+        <span class="sig-arg">end</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.remove_envelop">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Removes all intervals completely enveloped in the given range.
+
+Completes in O((r+m)*log n) time, where:
+  * n = size of the tree
+  * m = number of matches
+  * r = size of the search range (this is 1 for a point)
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="slice"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">slice</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">point</span>,
+        <span class="sig-arg">datafunc</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.slice">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Split Intervals that overlap point into two new Intervals. if 
+  specified, uses datafunc(interval, islower=True/False) to set the data 
+  field of the new Intervals. :param point: where to slice :param 
+  datafunc(interval, isupper): callable returning a new value for the 
+  interval's data field</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="clear"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">clear</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.clear">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Empties the tree.</p>
+  <p>Completes in O(1) tine.</p>
+  <dl class="fields">
+    <dt>Overrides:
+        _abcoll.MutableSet.clear
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="find_nested"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">find_nested</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.find_nested">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a dictionary mapping parent intervals to sets of intervals 
+  overlapped by and contained in the parent.</p>
+  <p>Completes in O(n^2) time. :rtype: dict of [Interval, set of 
+  Interval]</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="overlaps"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">overlaps</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">begin</span>,
+        <span class="sig-arg">end</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.overlaps">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns whether some interval in the tree overlaps the given point or 
+  range.</p>
+  <p>Completes in O(r*log n) time, where r is the size of the search range.
+  :rtype: bool</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="overlaps_point"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">overlaps_point</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">p</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.overlaps_point">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns whether some interval in the tree overlaps p.</p>
+  <p>Completes in O(log n) time. :rtype: bool</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="overlaps_range"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">overlaps_range</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">begin</span>,
+        <span class="sig-arg">end</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.overlaps_range">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns whether some interval in the tree overlaps the given range. 
+  Returns False if given a null interval over which to test.</p>
+  <p>Completes in O(r*log n) time, where r is the range length and n is the
+  table size. :rtype: bool</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="split_overlaps"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">split_overlaps</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.split_overlaps">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Finds all intervals with overlapping ranges and splits them along the 
+  range boundaries.</p>
+  <p>Completes in worst-case O(n^2*log n) time (many interval boundaries 
+  are inside many intervals), best-case O(n*log n) time (small number of 
+  overlaps &lt;&lt; n per interval).</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="merge_overlaps"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">merge_overlaps</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data_reducer</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data_initializer</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.merge_overlaps">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Finds all intervals with overlapping ranges and merges them
+into a single interval. If provided, uses data_reducer and
+data_initializer with similar semantics to Python's built-in
+reduce(reducer_func[, initializer]), as follows:
+
+If data_reducer is set to a function, combines the data
+fields of the Intervals with
+    current_reduced_data = data_reducer(current_reduced_data, new_data)
+If data_reducer is None, the merged Interval's data
+field will be set to None, ignoring all the data fields
+of the merged Intervals.
+
+On encountering the first Interval to merge, if
+data_initializer is None (default), uses the first
+Interval's data field as the first value for
+current_reduced_data. If data_initializer is not None,
+current_reduced_data is set to a shallow copy of
+data_initiazer created with
+    copy.copy(data_initializer).
+
+Completes in O(n*logn).
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="merge_equals"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">merge_equals</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">data_reducer</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">data_initializer</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.merge_equals">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Finds all intervals with equal ranges and merges them
+into a single interval. If provided, uses data_reducer and
+data_initializer with similar semantics to Python's built-in
+reduce(reducer_func[, initializer]), as follows:
+
+If data_reducer is set to a function, combines the data
+fields of the Intervals with
+    current_reduced_data = data_reducer(current_reduced_data, new_data)
+If data_reducer is None, the merged Interval's data
+field will be set to None, ignoring all the data fields
+of the merged Intervals.
+
+On encountering the first Interval to merge, if
+data_initializer is None (default), uses the first
+Interval's data field as the first value for
+current_reduced_data. If data_initializer is not None,
+current_reduced_data is set to a shallow copy of
+data_initiazer created with
+    copy.copy(data_initializer).
+
+Completes in O(n*logn).
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="items"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">items</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.items">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Constructs and returns a set of all intervals in the tree.</p>
+  <p>Completes in O(n) time. :rtype: set of Interval</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="is_empty"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">is_empty</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.is_empty">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns whether the tree is empty.</p>
+  <p>Completes in O(1) time. :rtype: bool</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="search"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">search</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">begin</span>,
+        <span class="sig-arg">end</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">strict</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.search">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Returns a set of all intervals overlapping the given range. Or,
+if strict is True, returns the set of all intervals fully
+contained in the range [begin, end].
+
+Completes in O(m + k*log n) time, where:
+  * n = size of the tree
+  * m = number of matches
+  * k = size of the search range (this is 1 for a point)
+:rtype: set of Interval
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="begin"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">begin</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.begin">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the lower bound of the first interval in the tree.</p>
+  <p>Completes in O(n) time.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="end"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">end</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.end">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the upper bound of the last interval in the tree.</p>
+  <p>Completes in O(n) time.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="range"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">range</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.range">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a minimum-spanning Interval that encloses all the members of 
+  this IntervalTree. If the tree is empty, returns null Interval. :rtype: 
+  Interval</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="span"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">span</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.span">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the length of the minimum-spanning Interval that encloses all 
+  the members of this IntervalTree. If the tree is empty, return 0.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="print_structure"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">print_structure</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">tostring</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.print_structure">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>## FOR DEBUGGING ONLY ## Pretty-prints the structure of the tree. If 
+  tostring is true, prints nothing and returns a string. :rtype: None or 
+  str</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="score"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">score</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">full_report</span>=<span class="sig-default">False</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.score">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns a number between 0 and 1, indicating how suboptimal the tree 
+  is. The lower, the better. Roughly, this number represents the fraction 
+  of flawed Intervals in the tree. :rtype: float</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="__getitem__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__getitem__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>)</span>
+    <br /><em class="fname">(Indexing operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__getitem__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <pre class="literalblock">
+
+Returns a set of all intervals overlapping the given index or 
+slice.
+
+Completes in O(k * log(n) + m) time, where:
+  * n = size of the tree
+  * m = number of matches
+  * k = size of the search range (this is 1 for a point)
+:rtype: set of Interval
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="__setitem__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__setitem__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">index</span>,
+        <span class="sig-arg">value</span>)</span>
+    <br /><em class="fname">(Index assignment operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__setitem__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Adds a new interval to the tree. A shortcut for 
+  add(Interval(index.start, index.stop, value)).</p>
+  <p>If an identical Interval object with equal range and data already 
+  exists, does nothing.</p>
+  <p>Completes in O(log n) time.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="__contains__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__contains__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">item</span>)</span>
+    <br /><em class="fname">(In operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__contains__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns whether item exists as an Interval in the tree. This method 
+  only returns True for exact matches; for overlaps, see the overlaps() 
+  method.</p>
+  <p>Completes in O(1) time. :rtype: bool</p>
+  <dl class="fields">
+    <dt>Overrides:
+        _abcoll.Container.__contains__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="containsi"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">containsi</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">begin</span>,
+        <span class="sig-arg">end</span>,
+        <span class="sig-arg">data</span>=<span class="sig-default">None</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.containsi">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Shortcut for (Interval(begin, end, data) in tree).</p>
+  <p>Completes in O(1) time. :rtype: bool</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="__iter__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__iter__</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__iter__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns an iterator over all the intervals in the tree.</p>
+  <p>Completes in O(1) time. :rtype: collections.Iterable[Interval]</p>
+  <dl class="fields">
+    <dt>Overrides:
+        _abcoll.Iterable.__iter__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="iter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">iter</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__iter__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns an iterator over all the intervals in the tree.</p>
+  <p>Completes in O(1) time. :rtype: collections.Iterable[Interval]</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="__len__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__len__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Length operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__len__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns how many intervals are in the tree.</p>
+  <p>Completes in O(1) time. :rtype: int</p>
+  <dl class="fields">
+    <dt>Overrides:
+        _abcoll.Sized.__len__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__eq__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__eq__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">other</span>)</span>
+    <br /><em class="fname">(Equality operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__eq__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Whether two IntervalTrees are equal.</p>
+  <p>Completes in O(n) time if sizes are equal; O(1) time otherwise. 
+  :rtype: bool</p>
+  <dl class="fields">
+    <dt>Overrides:
+        _abcoll.Set.__eq__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__repr__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__repr__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Representation operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__repr__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>:rtype: str</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__repr__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__str__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__str__</span>(<span class="sig-arg">self</span>)</span>
+    <br /><em class="fname">(Informal representation operator)</em>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__repr__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>:rtype: str</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__str__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="__reduce__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__reduce__</span>(<span class="sig-arg">self</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="intervaltree.intervaltree-pysrc.html#IntervalTree.__reduce__">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>For pickle-ing. :rtype: tuple</p>
+  <dl class="fields">
+    <dt>Overrides:
+        object.__reduce__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="_abc_negative_cache"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">_abc_negative_cache</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+&lt;_weakrefset.WeakSet object at 0x7efc06164090&gt;
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="intervaltree.intervaltree-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Tue Apr 11 16:06:05 2017
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

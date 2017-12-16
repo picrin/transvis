@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>transvis.io</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="transvis-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="transvis-module.html">Package&nbsp;transvis</a> ::
+        Module&nbsp;io
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="transvis.io-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module io</h1><p class="nomargin-top"><span class="codelink"><a href="transvis.io-pysrc.html">source&nbsp;code</a></span></p>
+<p>Module to read genomic data from redis.</p>
+
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#initDB" class="summary-sig-name">initDB</a>(<span class="summary-sig-arg">host</span>=<span class="summary-sig-default">&quot;localhost&quot;</span>,
+        <span class="summary-sig-arg">port</span>=<span class="summary-sig-default">2050</span>)</span><br />
+      Initializes connection to a real redis instance running on a given 
+      interface and a given port.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#initDB">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#initFakeDB" class="summary-sig-name">initFakeDB</a>(<span class="summary-sig-arg">*args</span>,
+        <span class="summary-sig-arg">**kwargs</span>)</span><br />
+      Initializes connection to a fake redisConn instance for the purpose 
+      of testing.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#initFakeDB">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#transToProbeset" class="summary-sig-name">transToProbeset</a>(<span class="summary-sig-arg">trans</span>)</span><br />
+      Retrieves probeset associated with a given transcription cluster ID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#transToProbeset">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#probesetToTrans" class="summary-sig-name">probesetToTrans</a>(<span class="summary-sig-arg">probeset</span>)</span><br />
+      Retrieves transcription clusters, to whom the given probeset belongs.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#probesetToTrans">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#metadataKeys" class="summary-sig-name">metadataKeys</a>()</span><br />
+      Retrieves a list of headers, which can be used to understand the 
+      output of <a 
+      href="transvis.io-module.html#probesetAnnotationMetadata" 
+      class="link">probesetAnnotationMetadata</a>.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#metadataKeys">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#probesetAnnotationMetadata" class="summary-sig-name">probesetAnnotationMetadata</a>(<span class="summary-sig-arg">probeset</span>)</span><br />
+      Retrieve annotation metadata for a probeset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#probesetAnnotationMetadata">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#geneToTrans" class="summary-sig-name">geneToTrans</a>(<span class="summary-sig-arg">gene</span>)</span><br />
+      Retrive transcription cluster IDs given a HGNC gene name, such as 
+      MBNL1 or FOXP2.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#geneToTrans">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#extendedToTrans" class="summary-sig-name">extendedToTrans</a>(<span class="summary-sig-arg">gene</span>)</span><br />
+      Retrive transcription cluster IDs given a non-standard gene name, 
+      such as OTTHUMT00000058841.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#extendedToTrans">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#transToGene" class="summary-sig-name">transToGene</a>(<span class="summary-sig-arg">trans</span>)</span><br />
+      Retrieve the HUGO Gene Nomenclature Committee (HGNC) gene names 
+      associated with a given transcription clusterID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#transToGene">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#transToExtended" class="summary-sig-name">transToExtended</a>(<span class="summary-sig-arg">trans</span>)</span><br />
+      Retrieve the extended gene names associated with a given 
+      transcription clusterID.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#transToExtended">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#alleleData" class="summary-sig-name">alleleData</a>()</span><br />
+      Return patient data in form of quadruples: [modalAllele, 
+      progenitalAllele, patient id, filename].</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#alleleData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#totalProbesets" class="summary-sig-name">totalProbesets</a>()</span><br />
+      Returns the count of all probesets (irrespective of annotation level)
+      in the database</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#totalProbesets">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#transIter" class="summary-sig-name">transIter</a>()</span><br />
+      Return an iterator through each transcription cluster in the 
+      database.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#transIter">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#probesetChipMetadata" class="summary-sig-name">probesetChipMetadata</a>(<span class="summary-sig-arg">probeset</span>)</span><br />
+      Return the chip metadata for a probeset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#probesetChipMetadata">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="transvis.io-module.html#probesetPatientData" class="summary-sig-name">probesetPatientData</a>(<span class="summary-sig-arg">probeset</span>)</span><br />
+      Return all probe intensities for a given probeset.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#probesetPatientData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="probesetData"></a><span class="summary-sig-name">probesetData</span>(<span class="summary-sig-arg">probeset</span>)</span><br />
+      Return the same data as <a 
+      href="transvis.io-module.html#probesetPatientData" 
+      class="link">probesetPatientData</a>, but aggregated per probeset as 
+      opposed to per patient.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="transvis.io-pysrc.html#probesetData">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="annotationDB"></a><span class="summary-name">annotationDB</span> = <code title="1">1</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="probeDB"></a><span class="summary-name">probeDB</span> = <code title="2">2</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="alterSpliceDB"></a><span class="summary-name">alterSpliceDB</span> = <code title="3">3</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="genecodeDB"></a><span class="summary-name">genecodeDB</span> = <code title="4">4</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="redisConn"></a><span class="summary-name">redisConn</span> = <code title="{}">{}</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="initDB"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">initDB</span>(<span class="sig-arg">host</span>=<span class="sig-default">&quot;localhost&quot;</span>,
+        <span class="sig-arg">port</span>=<span class="sig-default">2050</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#initDB">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes connection to a real redis instance running on a given 
+  interface and a given port. This function is not expected to raise any 
+  exceptions. If database is not accessible on the given interface/port, 
+  redisConn.exceptions.ConnectionError will be raised.</p>
+  <p>To access probe data use redisConn[&quot;probe&quot;]</p>
+  <p>To access annotation data use redisConn[&quot;annot&quot;]</p>
+  <p>To access alternative splicing data use 
+  redisConn[&quot;alterSplice&quot;]</p>
+  <p>To access genecode data use redisConn[&quot;genecode&quot;]</p>
+  <p>For the purpose of testing use initFakeDB.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>host</code></strong> - interface to connect to. Example values include localhost, 
+          127.0.0.1 and 0.0.0.0 (not recommended).</li>
+        <li><strong class="pname"><code>port</code></strong> - port to run on. 2050 is recommended, and used by transvis-db.</li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="initFakeDB"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">initFakeDB</span>(<span class="sig-arg">*args</span>,
+        <span class="sig-arg">**kwargs</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#initFakeDB">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Initializes connection to a fake redisConn instance for the purpose of
+  testing. Any (named) parameter may be passed, but will not change the 
+  behaviour of the function.</p>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="transToProbeset"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">transToProbeset</span>(<span class="sig-arg">trans</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#transToProbeset">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Retrieves probeset associated with a given transcription cluster 
+  ID.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>trans</code></strong> - valid transcription cluster ID.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>A set of probeset IDs.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="probesetToTrans"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">probesetToTrans</span>(<span class="sig-arg">probeset</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#probesetToTrans">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Retrieves transcription clusters, to whom the given probeset 
+  belongs.</p>
+  <p>Although we'd hope there's only one cluster, we still return a set, 
+  just in case.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>probeset</code></strong> - valid probeset ID.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>a set (mostly 1-element) of transcription cluster IDs.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="metadataKeys"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">metadataKeys</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#metadataKeys">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Retrieves a list of headers, which can be used to understand the 
+  output of <a href="transvis.io-module.html#probesetAnnotationMetadata" 
+  class="link">probesetAnnotationMetadata</a>.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>list of metadata keys</dd>
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@cache</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="probesetAnnotationMetadata"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">probesetAnnotationMetadata</span>(<span class="sig-arg">probeset</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#probesetAnnotationMetadata">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Retrieve annotation metadata for a probeset. To understand the output 
+  use <a href="transvis.io-module.html#metadataKeys" 
+  class="link">metadataKeys</a>.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>probeset</code></strong> - valid probeset ID.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>list of metadata.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="geneToTrans"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">geneToTrans</span>(<span class="sig-arg">gene</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#geneToTrans">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Retrive transcription cluster IDs given a HGNC gene name, such as 
+  MBNL1 or FOXP2.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>gene</code></strong> - A HGNC gene name, such as MBNL1 or FOXP2.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>set of transcription cluster IDs.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="extendedToTrans"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">extendedToTrans</span>(<span class="sig-arg">gene</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#extendedToTrans">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Retrive transcription cluster IDs given a non-standard gene name, such
+  as OTTHUMT00000058841.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>gene</code></strong> - a non-standard gene name, e.g. OTTHUMT00000058841</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>set of transcription clusters (usually just one)</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="transToGene"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">transToGene</span>(<span class="sig-arg">trans</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#transToGene">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Retrieve the HUGO Gene Nomenclature Committee (HGNC) gene names 
+  associated with a given transcription clusterID.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>trans</code></strong> - transcription cluster ID.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>set of transcription clusters (can be more than one, e.g. CFHR1, 
+          CFHR2 and CFHR3 are all part of a single transcription cluster).</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="transToExtended"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">transToExtended</span>(<span class="sig-arg">trans</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#transToExtended">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Retrieve the extended gene names associated with a given transcription
+  clusterID.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>trans</code></strong> - transcription cluster ID.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>set of transcription clusters.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="alleleData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">alleleData</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#alleleData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return patient data in form of quadruples: [modalAllele, 
+  progenitalAllele, patient id, filename].</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>patient data.</dd>
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@cache</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="totalProbesets"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">totalProbesets</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#totalProbesets">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Returns the count of all probesets (irrespective of annotation level) 
+  in the database</p>
+  <dl class="fields">
+    <dt>Decorators:</dt>
+    <dd><ul class="nomargin-top">
+        <li><code>@cache</code></li>
+    </ul></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="transIter"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">transIter</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#transIter">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return an iterator through each transcription cluster in the 
+  database.</p>
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd>transcription cluster iterator.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="probesetChipMetadata"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">probesetChipMetadata</span>(<span class="sig-arg">probeset</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#probesetChipMetadata">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return the chip metadata for a probeset.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>probeset</code></strong> - valid probeset ID.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>a list of up to 4 triples of the form [25-bases probe length, Y 
+          coord, X coord]. You have to take the complement of the probe 
+          sequence before using BLAST.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="probesetPatientData"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">probesetPatientData</span>(<span class="sig-arg">probeset</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="transvis.io-pysrc.html#probesetPatientData">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </tr></table>
+  
+  <p>Return all probe intensities for a given probeset. The results can be 
+  associated with patients by looking at output of <a 
+  href="transvis.io-module.html#alleleData" class="link">alleleData</a>, 
+  and are produced in the same order.</p>
+  <dl class="fields">
+    <dt>Parameters:</dt>
+    <dd><ul class="nomargin-top">
+        <li><strong class="pname"><code>probeset</code></strong> - valid probeset ID.</li>
+    </ul></dd>
+    <dt>Returns:</dt>
+        <dd>return n tuples, where n is the number of patients. Each tuple 
+          has arity k, with k between 1 and 4, corresponding to the number 
+          of probes in the probeset.</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="transvis-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Apr 16 13:07:04 2017
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
